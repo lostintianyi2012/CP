@@ -1,0 +1,951 @@
+% 4
+\subsection{Secret of Tianqiu Valley}
+
+\subsubsection{ICPC\,Asia\,Nanjing\,Regional\,2021\,L (Codeforces\,Gym 103470\,L)}
+
+\frame {
+	有 $n$ 盏灯排成\emm{\textsl{一圈}}，标号为 $0, 1, \ldots, n - 1$。给定每盏灯的初始状态 (开或关)，你可以进行若干次如下操作：
+	\begin{itemize}
+		\item 选择一盏\textsl{关闭}的灯 (设标号为 $i$)，\emm\textsl{切换}标号为 $i - 1, i, i + 1$ 的灯的状态 (下标在 $\operatorname{mod} n$ 意义下)。
+	\end{itemize}
+
+	你需要在 $2 n$ 次操作以内 (含) 将所有灯点亮或说明无法做到。{\color{fuchsia}$3 \leq n \leq 10^5$。}
+}
+
+\sol {
+	忽略``只能选择关闭的灯''的限制，容易发现这是一个 $\f F_2$ 下线性方程组问题：
+
+	用 $1$ 表示关闭，$0$ 表示开启。设 $\v s$ 为状态向量，$\v t$ 为操作向量，$\vbox to22pt{}\m A = \left(\begin{smallmatrix}
+		1\, & 1 & & & 1 \\
+		1\, & 1 & 1 & & \\
+		& 1 & 1 & {\tiny\mathstrut\Sddots{-1.5pt}} & \\
+		& & {\tiny\mathstrut\Sddots{-1.5pt}} & {\tiny\mathstrut\Sddots{-1.5pt}} & 1 \\
+		1\, &  &  & 1 & 1 \\
+	\end{smallmatrix}\right)$，则\vspace{-4pt}\begin{equation}\label{eq:light}\v s = \m A \v t.\end{equation}
+
+	\vspace{-8pt}\pause
+	解方程 \eqref{eq:light} 后，不妨设 $\v t$ 为一组解，我们说明，只要解存在，我们一定可以在 $2 \abs {\v t}$ 步内操作完成，其中 $\abs {\v t}$ 表示 $\v t$ 中 $1$ 的数量。
+}
+
+\sol {
+	不妨设{\only<2,4,6>{\color{red}}不存在 $i$ 使得 $\v s_i = \v t_i = 1$}，且存在 $j$ 使得 $\v s_j = 1$。
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.75cm, y=.75cm]
+			\fill[nearly opaque, white] (-4, -1.75) rectangle (3.75, 2.75);
+			\draw node at (-3.5, 1.5) {$\v s$:} node at (-3.5, -1) {$\v t$:} node at (-0.5, 2.4) {\small $j$};
+			% nodes
+			\only<7,9->{
+				\fill[nearly transparent, fuchsia] (-1, 1) rectangle (0, 2);
+				\node at (-0.5, 1.5) {$0$};
+			}
+			\only<-6,8>{
+				\fill[nearly transparent, orange] (-1, 1) rectangle (0, 2);
+				\node at (-0.5, 1.5) {$1$};
+			}
+
+			\only<4-6,8->{
+				\fill[nearly transparent, fuchsia] (0, 1) rectangle (1, 2);
+				\node at (0.5, 1.5) {$0$};
+			}
+			\only<7>{
+				\fill[nearly transparent, orange] (0, 1) rectangle (1, 2);
+				\node at (0.5, 1.5) {$1$};
+			}
+
+			\only<6-7,9->{
+				\fill[nearly transparent, fuchsia] (1, 1) rectangle (2, 2);
+				\node at (1.5, 1.5) {$0$};
+			}
+			\only<8>{
+				\fill[nearly transparent, orange] (1, 1) rectangle (2, 2);
+				\node at (1.5, 1.5) {$1$};
+			}
+
+			\only<3->{
+				\fill[nearly transparent, fuchsia] (-2, -1.5) rectangle (-1, -0.5);
+				\node at (-1.5, -1) {$0$};
+			}
+
+			\only<2-6,9->{
+				\fill[nearly transparent, fuchsia] (-1, -1.5) rectangle (0, -0.5);
+				\node at (-0.5, -1) {$0$};
+			}
+			\only<7-8>{
+				\fill[nearly transparent, orange] (-1, -1.5) rectangle (0, -0.5);
+				\node at (-0.5, -1) {$1$};
+			}
+
+			\only<8->{
+				\fill[nearly transparent, fuchsia] (0, -1.5) rectangle (1, -0.5);
+				\node at (0.5, -1) {$0$};
+			}
+			\only<3-7>{
+				\fill[nearly transparent, orange] (0, -1.5) rectangle (1, -0.5);
+				\node at (0.5, -1) {$1$};
+			}
+
+			\only<9->{
+				\fill[nearly transparent, fuchsia] (1, -1.5) rectangle (2, -0.5);
+				\node at (1.5, -1) {$0$};
+			}
+			\only<5-8>{
+				\fill[nearly transparent, orange] (1, -1.5) rectangle (2, -0.5);
+				\node at (1.5, -1) {$1$};
+			}
+			% trans
+			\only<2>{
+				\draw[->] (-0.5, 0.8) -- (-0.5, -0.3);
+			}
+			\only<3>{
+				\draw (-0.5, 0.8) -- (-0.5, -0.3) (-0.6, 0.8) -- (-1.4, -0.3) (-0.4, 0.8) -- (0.4, -0.3);
+				\node at (-0.3, 0.1) {\footnotesize $\m A$};
+			}
+			\only<4>{
+				\draw[->] (0.5, -0.3) -- (0.5, 0.8);
+			}
+			\only<5>{
+				\draw (0.5, 0.8) -- (0.5, -0.3) (0.4, 0.8) -- (-0.4, -0.3) (0.6, 0.8) -- (1.4, -0.3);
+				\node at (0.7, 0.1) {\footnotesize $\m A$};
+			}
+			\only<6>{
+				\draw[->] (1.5, -0.3) -- (1.5, 0.8);
+			}
+			\only<7>{
+				\draw[radius=0.333333] (-0.5, 1.5) circle {} (-0.5, -1) circle;
+				\draw[->] (-0.5, -0.3) -- (-0.5, 0.8);
+				\draw[->] (-0.6, -0.3) -- (-1.4, 0.8);
+				\draw[->] (-0.4, -0.3) -- (0.4, 0.8);
+			}
+			\only<8>{
+				\draw[radius=0.333333] (0.5, 1.5) circle {} (0.5, -1) circle;
+				\draw[->] (0.5, -0.3) -- (0.5, 0.8);
+				\draw[->] (0.4, -0.3) -- (-0.4, 0.8);
+				\draw[->] (0.6, -0.3) -- (1.4, 0.8);
+			}
+			\only<9>{
+				\draw[radius=0.333333] (-0.5, 1.5) circle {} (-0.5, -1) circle {} (1.5, 1.5) circle {} (1.5, -1) circle;
+				\draw[->] (-0.5, -0.3) -- (-0.5, 0.8);
+				\draw[->] (-0.6, -0.3) -- (-1.4, 0.8);
+				\draw[->] (-0.4, -0.3) -- (0.4, 0.8);
+				\draw[->] (1.5, -0.3) -- (1.5, 0.8);
+				\draw[->] (1.4, -0.3) -- (0.6, 0.8);
+				\draw[->] (1.6, -0.3) -- (2.4, 0.8);
+			}
+			% borders
+			\draw (-2.5, 2) -- (3.5, 2) (-2.5, 1) -- (3.5, 1) (-2.5, -0.5) -- (3.5, -0.5) (-2.5, -1.5) -- (3.5, -1.5);
+			\draw foreach \x in {-2,...,3} {(\x, 1) -- +(0, 1) (\x, -1.5) -- +(0, 1)};
+		\end{tikzpicture}
+	\end{figure}
+}
+
+% 5
+\subsection{开关}
+
+\subsubsection{原创题}
+
+\frame {
+	有 $n$ 盏灯排成一列，标号为 $1, 2, \ldots, n$，给定初始状态 $\v s$ 和目标状态 $\v t$，你可以进行若干次如下操作：
+	\begin{itemize}
+		\item 选择一段区间 $l, r$ ($1 \leq l \leq r \leq n$)，\emm{\textsl{你需要满足区间内点亮的灯数等于关闭的灯数}}，然后切换该区间内\textsl{所有}灯的状态。
+	\end{itemize}
+
+	你需要在满足 $\sum (r - l + 1) \leq 6\,666\,666$ 的条件下将 $\v s$ 变成	$\v t$ 或说明无法做到。{\color{fuchsia}$1 \leq n \leq 10^5$。}
+}
+
+\sol {
+	\compress{-4pt}{不难发现操作不改变亮着的灯的总数，\!所以当 $\abs {\v s} \neq \abs {\v t}$ 时无解。}\pause
+
+	用 $0, 1$ 表示两种状态，注意到操作可逆，故不妨设 $\v t$ 有序 (所有 $0$ 都在 $1$ 的左边)。\pause
+
+	先考虑如何将 $\underbrace{11\ldots1}_n\underbrace{00\ldots0}_m$ 变成 $\underbrace{00\ldots0}_m\underbrace{11\ldots1}_n$。
+}
+
+\sol {\vspace{8pt}
+	{\color{gray}先考虑如何将 $\underbrace{11\ldots1}_n\underbrace{00\ldots0}_m$ 变成 $\underbrace{00\ldots0}_m\underbrace{11\ldots1}_n$。}
+
+	将 $0$ 视作 $\to$，$1$ 视作 $\downarrow$，则一个序列可以看成一个 $n$ 行 $m$ 列的 (从左上角到右下角的) 格路：
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.6cm, y=.6cm]
+			\fill[nearly opaque, white] (-0.25, -0.25) rectangle (13.25, 5.25);
+			\draw[help lines, step=1] (0, 0) grid (13, 5);
+			\draw[->, semithick, fuchsia] (0, 5) -| (13, 0);
+			\draw[decorate, decoration=brace] (-3pt, 0) -- +(0, 5) node[midway, left, inner sep=5pt] {\small $n$};
+			\draw[decorate, decoration={brace,mirror}] (0, -3pt) -- +(13, 0) node[midway, below, inner sep=5pt] {\small $m$};
+			\only<1>{
+				\draw[->, semithick, blue] (0, 5) |- (13, 0);
+			}
+			\only<2->{
+				\fill[nearly transparent, orange] (0, 0) rectangle (5, 5);
+			}
+			\only<2>{
+				\draw[->, semithick, blue] (0, 5) -| (5, 0) -- (13, 0);
+			}
+			\only<3->{
+				\fill[nearly transparent, aqua] (5, 0) rectangle (10, 5);
+			}
+			\only<3>{
+				\draw[->, semithick, blue] (0, 5) -| (10, 0) -- (13, 0);
+			}
+			\only<4->{
+				\fill[nearly transparent, properpink] (10, 0) rectangle (13, 3);
+			}
+			\only<4>{
+				\draw[->, semithick, blue] (0, 5) -| (10, 3) -| (13, 0);
+			}
+			\only<5->{
+				\fill[nearly transparent, yellow] (10, 3) rectangle (12, 5);
+			}
+			\only<5>{
+				\draw[->, semithick, blue] (0, 5) -| (12, 3) -| (13, 0);
+			}
+			\only<6->{
+				\fill[nearly transparent, properpurple] (12, 3) rectangle (13, 4);
+			}
+			\only<6>{
+				\draw[->, semithick, blue] (0, 5) -| (12, 4) -| (13, 0);
+			}
+			\only<7->{
+				\fill[nearly transparent, red] (12, 4) rectangle (13, 5);
+			}
+			\only<7>{
+				\draw[->, semithick, blue] (0, 5) -| (13, 0);
+			}
+		\end{tikzpicture}
+	\end{figure}
+}
+
+\sol {
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.6cm, y=.6cm]
+			\fill[nearly opaque, white] (-0.25, -1) rectangle (13.25, 5.25);
+			\draw[help lines, step=1] (0, 0) grid (13, 5);
+			\draw[decorate, decoration=brace] (-3pt, 0) -- +(0, 5) node[midway, left, inner sep=5pt] {\small $n$};
+			\draw[decorate, decoration={brace,mirror}] (0, -3pt) -- +(13, 0) node[midway, below, inner sep=5pt] {\small $m$};
+			\fill[nearly transparent, orange] (0, 0) rectangle (5, 5);
+			\draw[very thick, orange] (0, 5) -- (5, 5);
+			\fill[nearly transparent, aqua] (5, 0) rectangle (10, 5);
+			\draw[very thick, aqua] (5, 5) -- (10, 5);
+			\fill[nearly transparent, properpink] (10, 0) rectangle (13, 3);
+			\draw[very thick, properpink] (13, 0) -- (13, 3);
+			\fill[nearly transparent, yellow] (10, 3) rectangle (12, 5);
+			\draw[very thick, yellow] (10, 5) -- (12, 5);
+			\fill[nearly transparent, properpurple] (12, 3) rectangle (13, 4);
+			\draw[very thick, properpurple] (13, 3) -- (13, 4);
+			\fill[nearly transparent, red] (12, 4) rectangle (13, 5);
+			\draw[very thick, red] (12, 5) -- (13, 5);
+		\end{tikzpicture}
+		\caption{}
+	\end{figure}
+
+	\vspace{-8pt}
+	这样操作的费用为图中所有正方形的边长之和的 $2$ 倍，这个值不超过 $2 (n + m - 1)$。
+}
+
+\sol {\vspace{12pt}
+	对于一般的情形，找到类似的 1/0 连续段，然后分治处理。
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.6cm, y=.6cm]
+			\useasboundingbox (-0.5, -0.5) rectangle (12, 7.75);
+			\fill[nearly opaque, white] (-0.5, -0.5) rectangle (12, 8);
+			\draw[->] (-0.5, 0) -- (11.5, 0) node[right, inner sep=3pt] {\small $x$};
+			\draw[->] (0, -0.5) -- (0, 7.5) node[above, inner sep=3pt] {\small $y$};
+			\draw[->, semithick, fuchsia] (0, 7) -- (11, 7) -- (11, 0);
+			\only<1>{
+				\draw[->, semithick, blue]
+					(0, 7) -| (0.88, 6.69) -| (2.34, 5.81) -| (4.14, 4.76)
+				 -| (4.84, 3.83) -| (6.1, 2.07) -| (8, 1.75) -| (9.12, 0.29) -| (11, 0);
+			}
+			\only<2->{
+				\fill[nearly transparent, orange] (0.88, 6.69) rectangle (2.34, 7);
+			}
+			\only<2>{
+				\draw[->, semithick, blue]
+					(0, 7) -| (2.34, 5.81) -| (4.14, 4.76) -| (4.84, 3.83)
+				 -| (6.1, 2.07) -| (8, 1.75) -| (9.12, 0.29) -| (11, 0);
+			}
+			\only<3->{
+				\fill[nearly transparent, aqua] (4.14, 4.76) rectangle (4.84, 5.81);
+			}
+			\only<3>{
+				\draw[->, semithick, blue]
+					(0, 7) -| (2.34, 5.81) -| (4.84, 3.83) -| (6.1, 2.07)
+				 -| (8, 1.75) -| (9.12, 0.29) -| (11, 0);
+			}
+			\only<4->{
+				\fill[nearly transparent, properpink] (2.34, 5.81) rectangle (4.84, 7);
+			}
+			\only<4>{
+				\draw[->, semithick, blue] (0, 7) -| (4.84, 3.83) -| (6.1, 2.07) -| (8, 1.75) -| (9.12, 0.29) -| (11, 0);
+			}
+			\only<5->{
+				\fill[nearly transparent, yellow] (6.1, 2.07) rectangle (8, 3.83);
+			}
+			\only<5>{
+				\draw[->, semithick, blue] (0, 7) -| (4.84, 3.83) -| (8, 1.75) -| (9.12, 0.29) -| (11, 0);
+			}
+			\only<6->{
+				\fill[nearly transparent, properpurple] (9.12, 0.29) rectangle (11, 1.75);
+			}
+			\only<6>{
+				\draw[->, semithick, blue] (0, 7) -| (4.84, 3.83) -| (8, 1.75) -| (11, 0);
+			}
+			\only<7->{
+				\fill[nearly transparent, red] (8, 1.75) rectangle (11, 3.83);
+			}
+			\only<7>{
+				\draw[->, semithick, blue] (0, 7) -| (4.84, 3.83) -| (11, 0);
+			}
+			\only<8->{
+				\fill[nearly transparent, green] (4.84, 3.83) rectangle (11, 7);
+			}
+			\only<8->{
+				\draw[->, semithick, blue] (0, 7) -| (11, 0);
+			}
+		\end{tikzpicture}
+	\end{figure}
+
+	\vspace{-8pt}
+	\onslide<9>{不难发现，$\sum (r - l) = O(n \log n)$。}
+}
+
+% 6
+\subsection{Quick sort}
+
+\subsubsection{ROI\,2018 D2T3 (Codeforces\,Gym 102154\,C)}
+
+\frame {\vspace{24pt}
+	给定一个排列 $\v p = \left[ p_1, p_2, \ldots, p_n \right]$。对奇偶性不同的整数 $l, r$ ($1 \leq l < r \leq n$)，定义操作 $S(l, r)$ 为：
+	\begin{itemize}
+		\item \compress{-12pt}{将 $p_l, p_{l+1}, \ldots, p_r$ 重排为 $p_{l+1}, p_{l+3}, \ldots, p_r, p_l, p_{l+2}, \ldots, p_{r-1}$。}
+	\end{itemize}
+
+	你需要构造一种操作序列将 $\v p$ 排序。\!{\color{fuchsia}$1 \mathbin\leq n \mathbin\leq 3000$，\!操作次数\break 不超过 $15\,000$。}\pausex
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.6cm, y=.6cm]
+			\useasboundingbox (-4, -2) rectangle (4, 2);
+			\fill[nearly opaque, white] (-4.75, -2.25) rectangle (4.75, 2.25);
+			\draw (-4.5, 2) -- (4.5, 2) (-4.5, 1) -- (4.5, 1) (-4.5, -1) -- (4.5, -1) (-4.5, -2) -- (4.5, -2);
+			\draw foreach \x in {-4,...,4} {(\x, 1) -- +(0, 1) (\x, -2) -- +(0, 1)};
+			\begin{scope}[nearly transparent]
+				\fill[red]			(-4, -2) rectangle +(1, 1) (-3, 1) rectangle +(1, 1);
+				\fill[orange]		(-3, -2) rectangle +(1, 1) (-1, 1) rectangle +(1, 1);
+				\fill[yellow]		(-2, -2) rectangle +(1, 1) ( 1, 1) rectangle +(1, 1);
+				\fill[green]		(-1, -2) rectangle +(1, 1) ( 3, 1) rectangle +(1, 1);
+				\fill[aqua]			( 0, -2) rectangle +(1, 1) (-4, 1) rectangle +(1, 1);
+				\fill[blue]			( 1, -2) rectangle +(1, 1) (-2, 1) rectangle +(1, 1);
+				\fill[properpurple]	( 2, -2) rectangle +(1, 1) ( 0, 1) rectangle +(1, 1);
+				\fill[fuchsia]		( 3, -2) rectangle +(1, 1) ( 2, 1) rectangle +(1, 1);
+			\end{scope}
+			\begin{scope}[->]
+				\draw (-2.5, 0.8) -- (-3.5, -0.8);
+				\draw (-0.5, 0.8) -- (-2.5, -0.8);
+				\draw ( 1.5, 0.8) -- (-1.5, -0.8);
+				\draw ( 3.5, 0.8) -- (-0.5, -0.8);
+				\draw (-3.5, 0.8) -- ( 0.5, -0.8);
+				\draw (-1.5, 0.8) -- ( 1.5, -0.8);
+				\draw ( 0.5, 0.8) -- ( 2.5, -0.8);
+				\draw ( 2.5, 0.8) -- ( 3.5, -0.8);
+			\end{scope}
+		\end{tikzpicture}
+		\caption{}
+	\end{figure}
+}
+
+\sol {
+	考虑按照 $1 \sim n$ 的顺序将对应数复位。设我们需要将 $v$ 从位置 $p$ 移到位置 $1$。\pause
+
+	可以通过一次操作将其从位置移到 $\left\lceil \frac p2 \right\rceil$。\pause
+
+	于是移动第 $i$ 个数的期望步数为 $\displaystyle \frac 1 {n - i + 1} \sum\limits_{k=1}^{n-i+1} \log k =\break O \bigl( \log (n - i + 1) \bigr)$，总步数为 $\displaystyle \frac 1n \sum_{i=1}^n \log i = O(n \log n)$，无法通过。
+}
+
+\sol {\vspace{16pt}
+	\emm{\textsl{操作为置换，而置换构成群}}。
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.6cm, y=.6cm]
+			\useasboundingbox (-4, -2) rectangle (4, 2);
+			\fill[nearly opaque, white] (-4.75, -2.25) rectangle (4.75, 2.25);
+			\draw (-4.5, 2) -- (4.5, 2) (-4.5, 1) -- (4.5, 1) (-4.5, -1) -- (4.5, -1) (-4.5, -2) -- (4.5, -2);
+			\draw foreach \x in {-4,...,4} {(\x, 1) -- +(0, 1) (\x, -2) -- +(0, 1)};
+			\begin{scope}[nearly transparent]
+				\fill[red]			(-4, -2) rectangle +(1, 1) (-3, 1) rectangle +(1, 1);
+				\fill[orange]		(-3, -2) rectangle +(1, 1) (-1, 1) rectangle +(1, 1);
+				\fill[yellow]		(-2, -2) rectangle +(1, 1) ( 1, 1) rectangle +(1, 1);
+				\fill[green]		(-1, -2) rectangle +(1, 1) ( 3, 1) rectangle +(1, 1);
+				\fill[aqua]			( 0, -2) rectangle +(1, 1) (-4, 1) rectangle +(1, 1);
+				\fill[blue]			( 1, -2) rectangle +(1, 1) (-2, 1) rectangle +(1, 1);
+				\fill[properpurple]	( 2, -2) rectangle +(1, 1) ( 0, 1) rectangle +(1, 1);
+				\fill[fuchsia]		( 3, -2) rectangle +(1, 1) ( 2, 1) rectangle +(1, 1);
+			\end{scope}
+			\alt<1>{\begin{scope}[->]}{\begin{scope}[<-, red, semithick]}
+				\draw (-2.5, 0.8) -- (-3.5, -0.8);
+				\draw (-0.5, 0.8) -- (-2.5, -0.8);
+				\draw ( 1.5, 0.8) -- (-1.5, -0.8);
+				\draw ( 3.5, 0.8) -- (-0.5, -0.8);
+				\draw (-3.5, 0.8) -- ( 0.5, -0.8);
+				\draw (-1.5, 0.8) -- ( 1.5, -0.8);
+				\draw ( 0.5, 0.8) -- ( 2.5, -0.8);
+				\draw ( 2.5, 0.8) -- ( 3.5, -0.8);
+			\end{scope}
+		\end{tikzpicture}
+	\end{figure}
+
+	\onslide<3->{从 $p$ 到 $1$ 的步数：$\log p \longrightarrow \log n - \log (n - p)$}
+
+	\onslide<4->{移动第 $i$ 个数的期望步数：\vspace{-8pt}\[ \frac 1 {n - i + 1} \sum_{k=1}^{n-i+1} \bigl( \log(n-i+1) - \log(n-i+1-k) \bigr) = O(1). \]}
+
+	\vspace{-16pt}
+	\onslide<5->{通过随机操作随机化初始排列，总步数期望为 $2 n + O(1)$。}
+}
+
+% 7
+\subsection{Balance the Cards}
+
+\subsubsection{Codeforces\,Round \texttt\#712\,F (Codeforces 1503\,F)}
+
+\frame {\vspace{8pt}\footnotesize
+	称一个由\textsl{非零整数}构成的序列 $\left[ a_1, a_2, \ldots, a_n \right]$ 是``\textsl{平衡的}''，当且仅当其满足如下三者之一：
+	\begin{itemize}
+		\item $n = 0$；
+		\item \compress{-20pt}{存在 $1 \leq k < n$ 使得 $\left[ a_1, a_2, \ldots, a_k \right]$ 和 $\left[ a_{k+1}, a_{k+2}, \ldots, a_n \right]$ 都是``平衡的''；}
+		\item $a_1 = - a_n > 0$ 且 $\left[ a_2, a_3, \ldots, a_{n-1} \right]$ 是``平衡的''。
+	\end{itemize}
+
+	给定 $2 n$ 个二元组 $\left( u_i, v_i \right)$，保证 $\left\{ u_1, u_2, \ldots, u_{2 n} \right\} = \left\{ v_1, v_2, \ldots, v_{2 n} \right\} =\break \left\{ 1, -1, 2, -2, \ldots, n, -n \right\}$，你需要找到一个大小为 $2 n$ 的排列 $p_1, p_2, \ldots, p_{2 n}$，使得下列两个条件同时成立：
+	\begin{itemize}
+		\item $\left[ u_{p_1}, u_{p_2}, \ldots, u_{p_{2 n}} \right]$ 是``平衡的''；
+		\item $\left[ v_{p_1}, v_{p_2}, \ldots, v_{p_{2 n}} \right]$ 是``平衡的''。
+	\end{itemize}
+
+	给出一组构造，或说明无解。{\color{fuchsia}$1 \leq n \leq 2 \times 10^5$。}
+}
+
+\newdimen\hzk
+\sol {
+	\alt<9->{
+		\vspace{8pt}
+		\begin{figure}[htb]
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-0.5, -2.25) rectangle (11.75, 3.5);
+				\fill[nearly opaque, white] (-0.5, -2.5) rectangle (11.75, 3);
+				\hzk0.46875cm
+				\begin{scope}[semithick, start angle=180, end angle=0]
+					\draw[fuchsia]			(0,    0) arc[radius=3\hzk];
+					\draw[blue]				(7.5,  0) arc[radius=1\hzk];
+					\draw[orange]			(6.25, 0) arc[radius=3\hzk];
+					\draw[red]				(1.25, 0) arc[radius=1\hzk];
+					\draw[green!80!black]	(5,    0) arc[radius=5\hzk];
+				\end{scope}
+				\begin{scope}[semithick, start angle=180, end angle=360]
+					\draw[fuchsia]			(5,    0) arc[radius=1\hzk];
+					\draw[blue]				(7.5,  0) arc[radius=3\hzk];
+					\draw[orange]			(0,    0) arc[radius=1\hzk];
+					\draw[red]				(2.5,  0) arc[radius=1\hzk];
+					\draw[green!80!black]	(8.75, 0) arc[radius=1\hzk];
+				\end{scope}
+				\coordinate (U0) at ( 3\hzk, 3\hzk);
+				\coordinate (U1) at (13\hzk, 1\hzk);
+				\coordinate (U2) at (13\hzk, 3\hzk);
+				\coordinate (U3) at ( 3\hzk, 1\hzk);
+				\coordinate (U4) at (13\hzk, 5\hzk);
+				\coordinate (D0) at ( 9\hzk,-1\hzk);
+				\coordinate (D1) at (15\hzk,-3\hzk);
+				\coordinate (D2) at ( 1\hzk,-1\hzk);
+				\coordinate (D3) at ( 5\hzk,-1\hzk);
+				\coordinate (D4) at (15\hzk,-1\hzk);
+				\begin{scope}[->, tips=proper, semithick]
+					\path[fuchsia]			(U0) +(-.06, 0) -- +(+.06, 0);
+					\path[blue]				(U1) +(-.06, 0) -- +(+.06, 0);
+					\path[orange]			(U2) +(+.06, 0) -- +(-.06, 0);
+					\path[red]				(U3) +(+.06, 0) -- +(-.06, 0);
+					\path[green!80!black]	(U4) +(-.06, 0) -- +(+.06, 0);
+					\path[fuchsia]			(D0) +(+.06, 0) -- +(-.06, 0);
+					\path[blue]				(D1) +(+.06, 0) -- +(-.06, 0);
+					\path[orange]			(D2) +(+.06, 0) -- +(-.06, 0);
+					\path[red]				(D3) +(+.06, 0) -- +(-.06, 0);
+					\path[green!80!black]	(D4) +(-.06, 0) -- +(+.06, 0);
+				\end{scope}
+				\begin{scope}[inner sep=3pt]
+					\node[above, fuchsia]			at (U0) {\footnotesize 顺};
+					\node[above, blue]				at (U1) {\footnotesize 顺};
+					\node[above, orange]			at (U2) {\footnotesize 逆};
+					\node[above, red]				at (U3) {\footnotesize 逆};
+					\node[above, green!80!black]	at (U4) {\footnotesize 顺};
+					\node[below, fuchsia]			at (D0) {\footnotesize 顺};
+					\node[below, blue]				at (D1) {\footnotesize 顺};
+					\node[below, orange]			at (D2) {\footnotesize 顺};
+					\node[below, red]				at (D3) {\footnotesize 顺};
+					\node[below, green!80!black]	at (D4) {\footnotesize 逆};
+				\end{scope}
+			\end{tikzpicture}
+			\caption{}
+		\end{figure}
+
+		\vspace{-16pt}
+		\begin{itemize}
+			\item 该图的连通分量由输入唯一确定。
+			\item<10-> 在解中，每个连通分量构成简单闭曲线，故每个圈中\textsl{顺时针弧}的数量比\textsl{逆时针弧}的数量\textsl{恰好多 $2$}。
+		\end{itemize}
+	}{
+		\vspace{12pt}
+		``平衡''序列的定义非常像括号序列。\pause
+
+		将 $x > 0$ 看作一种颜色的 \texttt(，$-x$ 看成对应颜色的 \texttt)。\pause
+
+		\begin{figure}[htb]
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-0.5, -2) rectangle (11.75, 3.5);
+				\fill[nearly opaque, white] (-0.5, -2.5) rectangle (11.75, 3.75);
+				\only<-5>{
+					\begin{scope}[inner sep=3pt, rectangle split, rectangle split parts=2, every node/.style=draw]
+						\node (0) at (0,    0) {\color{fuchsia}\texttt(\nodepart{two}\color{orange}\texttt(};
+						\node (1) at (1.25, 0) {\color{red}\texttt(\nodepart{two}\color{orange}\texttt)};
+						\node (2) at (2.5,  0) {\color{red}\texttt)\nodepart{two}\color{red}\texttt(};
+						\node (3) at (3.75, 0) {\color{fuchsia}\texttt)\nodepart{two}\color{red}\texttt)};
+						\node (4) at (5,    0) {\color{green!80!black}\texttt(\nodepart{two}\color{fuchsia}\texttt(};
+						\node (5) at (6.25, 0) {\color{orange}\texttt(\nodepart{two}\color{fuchsia}\texttt)};
+						\node (6) at (7.5,  0) {\color{blue}\texttt(\nodepart{two}\color{blue}\texttt(};
+						\node (7) at (8.75, 0) {\color{blue}\texttt)\nodepart{two}\color{green!80!black}\texttt(};
+						\node (8) at (10,   0) {\color{orange}\texttt)\nodepart{two}\color{green!80!black}\texttt)};
+						\node (9) at (11.25,0) {\color{green!80!black}\texttt)\nodepart{two}\color{blue}\texttt)};
+					\end{scope}
+				}
+				\hzk0.541265877365cm
+				\only<4-5> {
+					\begin{scope}[semithick, start angle=150, end angle=30]
+						\draw[fuchsia]			(0.north) arc[radius=3\hzk];
+						\draw[blue]				(6.north) arc[radius=1\hzk];
+						\draw[orange]			(5.north) arc[radius=3\hzk];
+						\draw[red]				(1.north) arc[radius=1\hzk];
+						\draw[green!80!black]	(4.north) arc[radius=5\hzk];
+					\end{scope}
+				}
+				\only<5> {
+					\begin{scope}[semithick, start angle=210, end angle=330]
+						\draw[fuchsia]			(4.south) arc[radius=1\hzk];
+						\draw[blue]				(6.south) arc[radius=3\hzk];
+						\draw[orange]			(0.south) arc[radius=1\hzk];
+						\draw[red]				(2.south) arc[radius=1\hzk];
+						\draw[green!80!black]	(7.south) arc[radius=1\hzk];
+					\end{scope}
+				}
+				\only<6->{
+					\hzk0.46875cm
+					\begin{scope}[semithick, start angle=180, end angle=0]
+						\draw[fuchsia]			(0,    0) arc[radius=3\hzk];
+						\draw[blue]				(7.5,  0) arc[radius=1\hzk];
+						\draw[orange]			(6.25, 0) arc[radius=3\hzk];
+						\draw[red]				(1.25, 0) arc[radius=1\hzk];
+						\draw[green!80!black]	(5,    0) arc[radius=5\hzk];
+					\end{scope}
+					\begin{scope}[semithick, start angle=180, end angle=360]
+						\draw[fuchsia]			(5,    0) arc[radius=1\hzk];
+						\draw[blue]				(7.5,  0) arc[radius=3\hzk];
+						\draw[orange]			(0,    0) arc[radius=1\hzk];
+						\draw[red]				(2.5,  0) arc[radius=1\hzk];
+						\draw[green!80!black]	(8.75, 0) arc[radius=1\hzk];
+					\end{scope}
+					\coordinate (U0) at ( 3\hzk, 3\hzk);
+					\coordinate (U1) at (13\hzk, 1\hzk);
+					\coordinate (U2) at (13\hzk, 3\hzk);
+					\coordinate (U3) at ( 3\hzk, 1\hzk);
+					\coordinate (U4) at (13\hzk, 5\hzk);
+					\coordinate (D0) at ( 9\hzk,-1\hzk);
+					\coordinate (D1) at (15\hzk,-3\hzk);
+					\coordinate (D2) at ( 1\hzk,-1\hzk);
+					\coordinate (D3) at ( 5\hzk,-1\hzk);
+					\coordinate (D4) at (15\hzk,-1\hzk);
+					\only<7->{
+						\begin{scope}[->, tips=proper, semithick]
+							\path[fuchsia]			(U0) +(-.06, 0) -- +(+.06, 0);
+							\path[blue]				(U1) +(-.06, 0) -- +(+.06, 0);
+							\path[orange]			(U2) +(+.06, 0) -- +(-.06, 0);
+							\path[red]				(U3) +(+.06, 0) -- +(-.06, 0);
+							\path[green!80!black]	(U4) +(-.06, 0) -- +(+.06, 0);
+							\path[fuchsia]			(D0) +(+.06, 0) -- +(-.06, 0);
+							\path[blue]				(D1) +(+.06, 0) -- +(-.06, 0);
+							\path[orange]			(D2) +(+.06, 0) -- +(-.06, 0);
+							\path[red]				(D3) +(+.06, 0) -- +(-.06, 0);
+							\path[green!80!black]	(D4) +(-.06, 0) -- +(+.06, 0);
+						\end{scope}
+					}
+					\only<8->{
+						\begin{scope}[inner sep=3pt]
+							\node[above, fuchsia]			at (U0) {\footnotesize 顺};
+							\node[above, blue]				at (U1) {\footnotesize 顺};
+							\node[above, orange]			at (U2) {\footnotesize 逆};
+							\node[above, red]				at (U3) {\footnotesize 逆};
+							\node[above, green!80!black]	at (U4) {\footnotesize 顺};
+							\node[below, fuchsia]			at (D0) {\footnotesize 顺};
+							\node[below, blue]				at (D1) {\footnotesize 顺};
+							\node[below, orange]			at (D2) {\footnotesize 顺};
+							\node[below, red]				at (D3) {\footnotesize 顺};
+							\node[below, green!80!black]	at (D4) {\footnotesize 逆};
+						\end{scope}
+					}
+				}
+			\end{tikzpicture}
+		\end{figure}
+	}
+}
+
+\sol {
+	\alt<5->{
+		\begin{figure}[htb]
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-0.5, -1.65) rectangle (7.9, 3.75);
+				\fill[nearly opaque, white] (-0.5, -1.9) rectangle (7.9, 3.75);
+				\draw[densely dotted] (-0.5, 0) -- (7.9, 0);
+				\draw[start angle=180, end angle=0, fuchsia] (0, 0) arc[radius=3.5];
+				\draw[start angle=180, end angle=360, blue] (0, 0) arc[radius=1];
+				\path[->, tips=proper, fuchsia] (3.44, 3.5) -- (3.56, 3.5);
+				\path[->, tips=proper, blue] (1.06, -1) -- (0.94, -1);
+				\begin{scope}[minimum size=2.5pt, circle, every node/.style=fill]
+					\node[red] at (0, 0) {};
+					\node[orange] (A) at (7, 0) {};
+					\node[orange] (B) at (2, 0) {};
+				\end{scope}
+				\begin{scope}[semithick]
+					\draw[->, orange] (A) -- +(0, -1);
+					\draw[<-, orange] (B) -- +(0, 1);
+				\end{scope}
+				\node at (2.04, 1.15) {\footnotesize\color{orange}$\cdots$};
+				\node at (7.04, -1.15) {\footnotesize\color{orange}$\cdots$};
+				\only<6->{
+					\draw[dashed] (1.6, -0.25) rectangle (2.4, 1.4) node[right] at (2.5, 0.575) {\footnotesize 终点};
+					\draw[dashed] (6.6, -1.4) rectangle (7.4, 0.25) node[left] at (6.5, -0.575) {\footnotesize 起点};
+					\draw (1.35, -1.65) rectangle (7.65, 1.65);
+				}
+			\end{tikzpicture}
+		\end{figure}
+
+		\onslide<6->{对于一个``顺''``逆''数量相同的序列，可以看成上图中从\textsl{起点}出发向下最后向下回到\textsl{终点}的曲线 ({\color{orange}橙色}部分)，\textsl{且起点正上方，终点正下方不能有弧经过}。}
+	}{
+		\vspace{8pt}
+		对于一个给定的``顺''``逆''环状序列，其中``顺''的数量比``逆''多 $2$，能否一定完成构造呢？\pause
+
+		\begin{itemize}
+			\item 必然存在两个相邻的``顺''，令其经过最左侧的点。
+		\end{itemize}
+
+		\begin{figure}[htb]
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-0.5, -2.15) rectangle (5, 2.5);
+				\fill[nearly opaque, white] (-0.5, -2.15) rectangle (5, 2.85);
+				\begin{scope}[semithick]
+					\draw[fuchsia] (0, 0) arc[start angle=180, end angle=0, radius=2.25];
+					\draw[blue] (0, 0) arc[start angle=180, end angle=360, radius=1.4];
+					\path[->, tips=proper, fuchsia] (2.19, 2.25) -- (2.31, 2.25);
+					\path[->, tips=proper, blue] (1.46, -1.4) -- (1.34, -1.4);
+				\end{scope}
+				\begin{scope}[inner sep=3pt]
+					\node[above, fuchsia] at (2.25, 2.25) {\footnotesize 顺};
+					\node[below, blue] at (1.4, -1.4) {\footnotesize 顺};
+					\alt<4->{
+						\node at (2.84, 0.65) {\footnotesize\color{orange}$\cdots$};
+						\node at (4.54, -0.65) {\footnotesize\color{orange}$\cdots$};
+					}{
+						\node at (2.84, 0.15) {\footnotesize $\cdots$};
+						\node at (4.54, -0.15) {\footnotesize $\cdots$};
+					}
+				\end{scope}
+				\begin{scope}[minimum size=2.5pt, circle, every node/.style=fill]
+					\node[red] at (0, 0) {};
+					\only<4->{
+						\node[orange] (A) at (4.5, 0) {};
+						\node[orange] (B) at (2.8, 0) {};
+					}
+				\end{scope}
+				\only<4->{
+					\draw[->, semithick, orange] (A) -- +(0, -0.5);
+					\draw[<-, semithick, orange] (B) -- +(0, 0.5);
+				}
+			\end{tikzpicture}
+		\end{figure}\pause
+
+		\vspace{-12pt}
+		\begin{itemize}
+			\item 剩下的部分中，``顺''的数量与``逆''的数量恰好相同。
+		\end{itemize}
+	}
+}
+
+\ifpreview\else
+\begin{frame}[fragile]
+	\vspace{16pt}
+	记``顺''为 $+$，``逆''为 $-$。令 $S$ 为所有可构造的 $+/-$ 序列的集合。显然 $[\mskip1mu] \in S$。\pause
+
+	\begin{enumerate}
+		\item 若 $s \in S$，则 ${+ s -} \in S$。
+	\end{enumerate}
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.75cm, y=.75cm]
+			\useasboundingbox (-4.75, -3) rectangle (4.75, 3);
+			\fill[nearly opaque, white] (-4.75, -3.5) rectangle (4.75, 3.55);
+			\draw[densely dotted] (-4.75, 0) -- (4.75, 0);
+			\draw (-3.25, -2) rectangle (3.25, 2);
+			\alt<3->{
+				\begin{scope}[semithick]
+					\draw[<-, orange] (A) -- +(0, -1);
+					\draw[->, orange] (B) -- +(0, 1);
+					\begin{scope}[hzk/.style 2 args={decoration={
+						markings, mark=between positions .166667 and .84 step .166667 with {
+							##1[semithick, ##2]{>}
+						}
+					}}]
+						\draw[postaction=decorate, hzk={\arrow}{blue}, blue] (A) arc[start angle=0, end angle=180, radius=3.375];
+						\draw[postaction=decorate, hzk={\arrowreversed}{fuchsia}, fuchsia] (B) arc[start angle=180, end angle=360, radius=3.375];
+					\end{scope}
+				\end{scope}
+				\begin{scope}[minimum size=2.5pt, circle, every node/.style=fill]
+					\node[orange] (A) at (2.5, 0) {};
+					\node[orange] (B) at (-2.5, 0) {};
+					\node[fuchsia] (C) at (4.25, 0) {};
+					\node[blue] (D) at (-4.25, 0) {};
+				\end{scope}
+				\draw[semithick, densely dashed, orange, postaction=decorate, decoration={
+					markings, mark=between positions .254 and .8 step .1618 with {
+						\arrowreversed[semithick, orange]{>}
+					}
+				}] (2.5, -1) .. controls (2.5, -4) and (-2.5, 4) .. (-2.5, 1);
+			}{
+				\begin{scope}[minimum size=2.5pt, circle, every node/.style=fill]
+					\node[fuchsia] (A) at (2.5, 0) {};
+					\node[blue] (B) at (-2.5, 0) {};
+				\end{scope}
+				\begin{scope}[semithick]
+					\draw[->, fuchsia] (A) -- +(0, -1);
+					\draw[<-, blue] (B) -- +(0, 1);
+				\end{scope}
+				\draw[semithick, densely dashed, orange, postaction=decorate, decoration={
+					markings, mark=between positions .247 and .8 step .1618 with {
+						\arrow[semithick, orange]{>}
+					}
+				}] (2.5, -1) .. controls (2.5, -4) and (-2.5, 4) .. (-2.5, 1);
+				\node at (-2.46, 1.15) {\footnotesize\color{blue}$\cdots$};
+				\node at (2.54, -1.15) {\footnotesize\color{fuchsia}$\cdots$};
+			}
+		\end{tikzpicture}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{enumerate}
+		\setcounter{enumi}{1}
+		\item 若 $s \in S$，则 ${- s +} \in S$。
+	\end{enumerate}
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.75cm, y=.75cm]
+			\useasboundingbox (-4.75, -3) rectangle (4.75, 3);
+			\fill[nearly opaque, white] (-4.75, -3) rectangle (4.75, 3);
+			\draw[densely dotted] (-4.75, 0) -- (4.75, 0);
+			\draw (-3.25, -2) rectangle (3.25, 2); % (5 + 1.5) * 4
+			\alt<2->{
+				\begin{scope}[semithick]
+					\draw[<-, orange] (A) -- +(0, -1);
+					\draw[->, orange] (B) -- +(0, 1);
+					\begin{scope}[hzk/.style 2 args={decoration={
+						markings, mark=between positions .166667 and .84 step .166667 with {
+							##1[semithick, ##2]{>}
+						}
+					}}]
+						\draw[postaction=decorate, hzk={\arrow}{blue}, blue] (A) -- +(0, 2) arc[start angle=180, end angle=0, radius=.75] -- +(0, -2);
+						\draw[postaction=decorate, hzk={\arrowreversed}{fuchsia}, fuchsia] (B) -- +(0, -2) arc[start angle=360, end angle=180, radius=.75] -- +(0, 2);
+					\end{scope}
+				\end{scope}
+				\begin{scope}[minimum size=2.5pt, circle, every node/.style=fill]
+					\node[orange] (A) at (2.5, 0) {};
+					\node[orange] (B) at (-2.5, 0) {};
+					\node[blue] (C) at (4, 0) {};
+					\node[fuchsia] (D) at (-4, 0) {};
+				\end{scope}
+				\draw[semithick, densely dashed, orange, postaction=decorate, decoration={
+					markings, mark=between positions .254 and .8 step .1618 with {
+						\arrowreversed[semithick, orange]{>}
+					}
+				}] (2.5, -1) .. controls (2.5, -4) and (-2.5, 4) .. (-2.5, 1);
+			}{
+				\begin{scope}[minimum size=2.5pt, circle, every node/.style=fill]
+					\node[fuchsia] (A) at (2.5, 0) {};
+					\node[blue] (B) at (-2.5, 0) {};
+				\end{scope}
+				\begin{scope}[semithick]
+					\draw[->, fuchsia] (A) -- +(0, -1);
+					\draw[<-, blue] (B) -- +(0, 1);
+				\end{scope}
+				\draw[semithick, densely dashed, orange, postaction=decorate, decoration={
+					markings, mark=between positions .247 and .8 step .1618 with {
+						\arrow[semithick, orange]{>}
+					}
+				}] (2.5, -1) .. controls (2.5, -4) and (-2.5, 4) .. (-2.5, 1);
+				\node at (-2.46, 1.15) {\footnotesize\color{blue}$\cdots$};
+				\node at (2.54, -1.15) {\footnotesize\color{fuchsia}$\cdots$};
+			}
+		\end{tikzpicture}
+	\end{figure}
+\end{frame}
+\fi
+
+\sol {
+	\begin{enumerate}
+		\setcounter{enumi}{2}
+		\item 若 $s, t \in S$，则 $s t \in S$。
+	\end{enumerate}
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.75cm, y=.75cm]
+			\useasboundingbox (-5, -2.5) rectangle (5, 2.5);
+			\fill[nearly opaque, white] (-5, -2.5) rectangle (5, 2.5);
+			\draw[densely dotted] (-5, 0) -- (5, 0);
+			\alt<3->{
+				\begin{scope}[shift={(1.25, 0)}]
+					\draw (-5.75, -2) rectangle (3.25, 2) (-4.916667, -1) rectangle (-2.083333, 1);
+					\begin{scope}[minimum size=2.5pt, circle, every node/.style=fill]
+						\node[fuchsia] (A) at (2.5, 0) {};
+						\node[orange] (B) at (-2.5, 0) {};
+						\node[blue] (C) at (-4.5, 0) {};
+						\node[green!80!black] at (-5.333333, 0) {};
+					\end{scope}
+					\begin{scope}[semithick]
+						\draw[->, fuchsia] (A) -- +(0, -1);
+						\draw[<-, orange] (B) -- +(0, 0.6);
+						\draw[->, orange] (B) -- +(0, -0.6);
+						\draw[<-, blue] (C) -- +(0, 0.6);
+					\end{scope}
+					\begin{scope}[semithick, densely dashed, orange]
+						\draw[postaction=decorate, decoration={
+							markings, mark=between positions .247 and .8 step .1618 with {
+								\arrow[semithick, orange]{>}
+							}
+						}] (2.5, -1) .. controls (2.5, -4) and (-2.5, 4) .. (-2.5, 1);
+						\draw[postaction=decorate, decoration={
+							markings, mark=between positions .35 and .8 step .31 with {
+								\arrow[semithick, orange]{>}
+							}
+						}] (-2.5, -0.6) .. controls (-2.5, -1.8) and (-4.5, 1.8) .. (-4.5, 0.6);
+						\draw (-2.5, 1) -- (-2.5, 0.6);
+					\end{scope}
+				\end{scope}
+			}{
+				\draw (-4.5, -1.5) rectangle (-0.5, 1.5) (0, -1.5) rectangle (4.5, 1.5); % (3 + 1) * 3
+				\begin{scope}[minimum size=2.5pt, circle, every node/.style=fill]
+					\node[fuchsia] (A) at (-1, 0) {};
+					\node[blue] (B) at (-4, 0) {};
+					\node[fuchsia] (C) at (4, 0) {};
+					\node[blue] (D) at (1, 0) {};
+					\only<2->{\node[green!80!black] at (0.25, 0) {};}
+				\end{scope}
+				\begin{scope}[semithick]
+					\draw[->, fuchsia] (A) -- +(0, -1);
+					\draw[<-, blue] (B) -- +(0, 1);
+					\draw[->, fuchsia] (C) -- +(0, -1);
+					\draw[<-, blue] (D) -- +(0, 1);
+				\end{scope}
+				\begin{scope}[semithick, densely dashed, orange, decoration={
+					markings, mark=between positions .247 and .8 step .261 with {
+						\arrow[semithick, orange]{>}
+					}
+				}]
+					\draw[postaction=decorate] (4, -1) .. controls (4, -2.5) and (1, 2.5) .. (1, 1);
+					\draw[postaction=decorate] (-1, -1) .. controls (-1, -2.5) and (-4, 2.5) .. (-4, 1);
+				\end{scope}
+				\node at (-3.96, 1.15) {\footnotesize\color{blue}$\cdots$};
+				\node at (-0.96, -1.15) {\footnotesize\color{fuchsia}$\cdots$};
+				\node at (1.04, 1.15) {\footnotesize\color{blue}$\cdots$};
+				\node at (4.04, -1.15) {\footnotesize\color{fuchsia}$\cdots$};
+				\only<2->{
+					\draw (0.5, -0.1875) rectangle (1, 0.1875);
+					\draw[densely dotted]
+						(-4.5, -1.5) -- (0.5, -0.1875) (-0.5, -1.5) -- (1, -0.1875)
+						(-4.5,  1.5) -- (0.5,  0.1875) (-0.5,  1.5) -- (1,  0.1875);
+				}
+			}
+		\end{tikzpicture}
+	\end{figure}
+}
+
+\sol {\vspace{12pt}
+	因此 $S$ 为所有 $+$ 和 $-$ 数量相同的序列集合。事实上，我们可以通过栈和链表来辅助完成这个构造\only<24->{，时间复杂度 \smash{$O(n)$}}。\pause
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.5cm, y=.5cm]
+			\useasboundingbox (-0.5, -5) rectangle (16.5, 4.75);
+			\fill[nearly opaque, white] (-0.5, -5) rectangle (16.5, 5.25);
+			\draw[help lines, step=1] (0, -4) grid (16, 4);
+			\draw[->] (-0.5, 0) -- (16.5, 0) node[right, inner sep=3pt] {\small $x$};
+			\draw[->] (0, -5) -- (0, 4.5) node[above, inner sep=3pt] {\small $y$};
+			\draw[semithick, fuchsia] (0, 0)
+				-- ++(1, -1) -- ++(1, 1) -- ++(1, 1) -- ++(1, -1) -- ++(1, 1) -- ++(1, 1) -- ++(1, 1) -- ++(1, -1)
+				-- ++(1, -1) -- ++(1, 1) -- ++(1, -1) -- ++(1, 1) -- ++(1, -1) -- ++(1, -1) -- ++(1, 1) -- ++(1, -1);
+			\begin{scope}[->, semithick, minimum size=2.5pt, circle, green!80!black, every node/.style=fill]
+				\only<3>{\draw (1, 0) -- +(0, -1) node {};}
+				\only<4>{\node at (2, 0) {};}
+				\only<5>{\draw (3, 0) -- +(0, 1) node {};}
+				\only<6-7>{\node at (4, 0) {};}
+				\only<8>{\draw (5, 0) -- +(0, 1) node {};}
+				\only<9>{\draw (6, 0) -- +(0, 2) node {};}
+				\only<10>{\draw (7, 0) -- +(0, 3) node {};}
+				\only<11>{\draw (8, 0) -- +(0, 2) node {};}
+				\only<12>{\draw (9, 0) -- +(0, 1) node {};}
+				\only<13>{\draw (10, 0) -- +(0, 2) node {};}
+				\only<14-15>{\draw (11, 0) -- +(0, 1) node {};}
+				\only<16>{\draw (12, 0) -- +(0, 2) node {};}
+				\only<17-18>{\draw (13, 0) -- +(0, 1) node {};}
+				\only<19-20>{\node at (14, 0) {};}
+				\only<21>{\draw (15, 0) -- +(0, 1) node {};}
+				\only<22->{\node at (16, 0) {};}
+			\end{scope}
+			\begin{scope}[nearly transparent]
+				\only<4-6>{\fill[blue] (0, 0) -- ++(1, -1) -- ++(1, 1) -- cycle;}
+				\only<6>{\fill[orange] (2, 0) -- ++(1, 1) -- ++(1, -1) -- cycle;}
+				\only<7-19>{\fill[aqua] (0, 0) -- ++(1, -1) -- ++(1, 1) -- ++(1, 1) -- ++(1, -1) -- cycle;}
+				\only<11>{\fill[properpink] (6, 2) -- ++(1, 1) -- ++(1, -1) -- cycle;}
+				\only<12-14>{\fill[yellow] (5, 1) -- ++(2, 2) -- ++(2, -2) -- cycle;}
+				\only<14>{\fill[properpurple] (9, 1) -- ++(1, 1) -- ++(1, -1) -- cycle;}
+				\only<15-17>{\fill[red] (5, 1) -- ++(2, 2) -- ++(2, -2) -- ++(1, 1) -- ++(1, -1) -- cycle;}
+				\only<17>{\fill[blue] (11, 1) -- ++(1, 1) -- ++(1, -1) -- cycle;}
+				\only<18>{\fill[orange] (5, 1) -- ++(2, 2) -- ++(2, -2) -- ++(1, 1) -- ++(1, -1) -- ++(1, 1) -- ++(1, -1) -- cycle;}
+				\only<19>{\fill[properpink] (4, 0) -- ++(1, 1) -- ++(2, 2) -- ++(2, -2) -- ++(1, 1) -- ++(1, -1) -- ++(1, 1) -- ++(1, -1) -- ++(1, -1) -- cycle;}
+				\only<20-22>{\fill[yellow] (0, 0) -- ++(1, -1) -- ++(1, 1) -- ++(1, 1) -- ++(1, -1) -- ++(1, 1) -- ++(2, 2) -- ++(2, -2) -- ++(1, 1) -- ++(1, -1) -- ++(1, 1) -- ++(1, -1) -- ++(1, -1) -- cycle;}
+				\only<22>{\fill[properpurple] (14, 0) -- ++(1, 1) -- ++(1, -1) -- cycle;}
+				\only<23->{\fill[red] (0, 0) -- ++(1, -1) -- ++(1, 1) -- ++(1, 1) -- ++(1, -1) -- ++(1, 1) -- ++(2, 2) -- ++(2, -2) -- ++(1, 1) -- ++(1, -1) -- ++(1, 1) -- ++(1, -1) -- ++(1, -1) -- ++(1, 1) -- ++(1, -1) -- cycle;}
+			\end{scope}
+			\node at (8, -4.75) {\small
+				\only<4>{($\color{green!80!black} - +$)}%
+				\only<6>{($\color{green!80!black} + -$)}%
+				\only<7>{($\color{blue} {-} {+} \color{orange} {+} {-}$)}%
+				\only<11>{($\color{green!80!black} + -$)}%
+				\only<12>{(${\color{green!80!black} +} {+} {-} {\color{green!80!black} -}$)}%
+				\only<14>{($\color{green!80!black} + -$)}%
+				\only<15>{($\color{yellow!90!black} {+} {+} {-} {-} \color{properpurple} {+} {-}$)}%
+				\only<17>{($\color{green!80!black} + -$)}%
+				\only<18>{($\color{red} {+} {+} {-} {-} {+} {-} \color{blue} {+} {-}$)}%
+				\only<19>{(${\color{green!80!black} +} {+} {+} {-} {-} {+} {-} {+} {-} {\color{green!80!black} -}$)}%
+				\only<20>{($\color{aqua} {-} {+} {+} {-} \color{properpink} {+} {+} {+} {-} {-} {+} {-} {+} {-} {-}$)}%
+				\only<22>{($\color{green!80!black} + -$)}%
+				\only<23>{($\color{yellow!90!black} {-} {+} {+} {-} {+} {+} {+} {-} {-} {+} {-} {+} {-} {-} \color{properpurple} {+} {-}$)}%
+			};
+		\end{tikzpicture}
+	\end{figure}
+}

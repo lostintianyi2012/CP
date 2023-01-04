@@ -1,0 +1,15 @@
+http://blog.csdn.net/liutian429073576/article/details/62416347
+http://www.lydsy.com/JudgeOnline/upload/day1.pdf
+CC MARCH18
+http://uoj.ac/problem/271
+虚树
+http://immortalco.blog.uoj.ac/blog/2625
+
+一、关于树上连通块的dp
+1、包含根的，按dfs序dp
+2、不一定包含根的，点分治
+3、带修改的，树剖/LCT
+
+二、树上同色连通块问题
+1、QTREE6、QTREE7
+2、链修改颜色（LCM）

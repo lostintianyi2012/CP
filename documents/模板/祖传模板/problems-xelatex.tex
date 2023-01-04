@@ -1,0 +1,160 @@
+\documentclass[11pt,a4paper,oneside]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{xeCJK}
+\usepackage[english]{babel}
+\usepackage{olymp}
+\usepackage{amsmath,graphicx,epigraph,bnf,enumitem}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{ctex}
+\usepackage{ulem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{indentfirst}
+\usepackage{float}
+\newfontfamily\consolas{Consolas}
+
+\setlength{\parindent}{2em}
+
+\newcommand{\chr}[1]{\mbox{`\texttt{#1}'}}
+\newcommand{\txt}[1]{\mbox{``\texttt{#1}''}}
+
+\renewcommand{\contestname}{
+良心送分赛
+}
+\renewcommand{\figurename}{}
+
+\newcommand{\timeLimit}{3 seconds}
+\renewcommand{\defaultmemorylimit}{512 megabytes}
+\begin{document}
+	\title{\textbf{良心送分赛}}
+	\author{zzq}
+	\date{2018.07}
+	\maketitle
+    \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	\hline
+		题目名称 & 交互题 & 传统题 & 提答题\\
+	\hline
+		提交文件名 & chicken.cpp & sequence.c/cpp/pas & game1.out-game10.out \\
+	\hline
+		输入文件名 & N/A & sequence.in & N/A\\
+	\hline
+		输出文件名 & N/A & sequence.out & N/A\\
+	\hline
+		时间限制 & 2s & 2s & N/A\\
+	\hline
+		是否捆绑测试 & 是 & 否 & 否\\
+	\hline
+		内存限制 & 1MB+ & 1GB & N/A\\
+	\hline
+		是否有部分分 & 否 & 否 & 是\\
+	\hline
+		题目类型 & 交互 & 传统 & 提交答案\\
+	\hline
+		是否有附加文件 & 是 & 否 & 是\\
+	\hline
+		编译开关 & -O2 -std=c++11 & -O2 -std=c++11 & N/A \\
+	\hline
+	\end{tabular}\par$\ $\par
+    \end{center}
+	注意：...
+    \newpage
+%===============================================================================================
+\renewcommand{\timeLimit}{2 seconds}
+\renewcommand{\defaultmemorylimit}{1+ megabyte}
+\begin{problem}{交互题(chicken.cpp)}{stdin}{stdout}{\timeLimit}
+
+\textbf{这是一道交互题。本题仅支持C++。}\par
+
+有一天...
+
+\InteractorNotes
+
+选手...
+
+\Examples
+
+\begin{example}
+\exmp{
+10 20 40 40 20 30 10 30 20 30 10
+}{
+40
+}%
+\end{example}
+
+样例...
+
+\Notes
+
+保证...
+
+\end{problem}
+\newpage
+%===============================================================================================
+\renewcommand{\timeLimit}{2 seconds}
+\renewcommand{\defaultmemorylimit}{1 gigabyte}
+\begin{problem}{传统题(sequence.c/cpp/pas)}{sequence.in}{sequence.out}{\timeLimit}
+
+ysy...
+
+\InputFile
+
+一行...
+
+\OutputFile
+
+一行...
+
+\Examples
+
+\begin{example}
+\exmp{
+10 2 998244353
+}{
+3750
+}%
+\exmp{
+100 23333333 998244353
+}{
+369186898
+}%
+\end{example}
+
+\Notes
+
+对于...
+
+\end{problem}
+\newpage
+%===============================================================================================
+\renewcommand{\timeLimit}{N/A}
+\renewcommand{\defaultmemorylimit}{N/A}
+\begin{problem}{提答题(game1.out-game10.out)}{game1.in-game10.in}{game1.out-game10.out}{\timeLimit}
+
+近期...
+
+\InputFile
+
+第一...
+
+\OutputFile
+
+你需...
+
+\Scoring
+
+每个...
+
+\FileList
+
+tes...
+
+\Notes
+
+1.如...
+
+\end{problem}
+%===============================================================================================
+\end{document}

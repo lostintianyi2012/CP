@@ -1,0 +1,1237 @@
+% 14
+\subsection{仓颉造数}
+
+\subsubsection{CCPC\,华为云挑战赛\,2021\,F (HDU\,7092)}
+
+\frame {
+	给定正整数 $a, b$，初始时 $S = \left\{ \frac ab, \frac ba \right\}$。你可以进行若干次如下操作：
+	\begin{itemize}
+		\item 选择 $S$ 中两个数 $x, y$，令 $S \gets S \cup \left\{ \frac {x + y} 2, \frac {2 x y} {x + y} \right\}$。
+	\end{itemize}
+
+	求是否可以在有限步内使 $1 \in S$。{\color{fuchsia}$1 \leq a, b \leq 10^9$。}
+}
+
+\sol {\vspace{8pt}
+	不难发现，如果 $S$ 中只有一个元素 $x$，那么无论怎么操作 $S$ 始终为 $\{x\}$。\pause
+
+	于是考虑在模意义下进行计算。不妨设 $a, b$ 互素，取素数 $p \mid a + b$，则在 ($\operatorname{mod}\,p$) 意义下 $S = \{-1\}$。\pause
+
+	这说明，如果欲使 $1 \in S$，$a + b$ 不能有奇素因子，即 $a + b$ 必须是 $2$ 的幂。\pause
+
+	另一方面，如果 $a + b$ 是 $2$ 的幂，注意到\vspace{-4pt}\[ \frac b {a + b} \cdot \frac ab + \frac a {a + b} \cdot \frac ba = 1, \]
+
+	\vspace{-4pt}\noindent 我们可以只用算术平均操作达成目的。
+}
+
+% 15
+\subsection{同构判定海蜇}
+
+\subsubsection{SOJ\,Programming\,Contest\,\texttt\#3\,J}
+
+\frame {
+	给定一个群 $(S, \circ)$，你需要构造一张无向简单图 $G = (V, E)$ 满足它的自同构群 $\operatorname{Aut} G \cong S$，且 $\abs V \leq 127$。
+
+	{\color{fuchsia}$1 \leq \abs S \leq 63$。}
+}
+
+\sol {\vspace{16pt}
+	根据数据规模，猜测要求是 $\abs V \leq 2 \abs S$。\pause
+
+	先考虑 $S \cong Z_n$。\pause
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.75cm, y=.75cm]
+			\useasboundingbox (-4.5, -2.9) rectangle (4.5, 2.9);
+			\fill[nearly opaque, white] (-4.5, -3) rectangle (4.5, 3.2) (-2.333333, -3) rectangle (2.333333, 3.6);
+			\begin{scope}[circle, minimum size=15pt, every node/.style=draw]
+				\alt<6>{\begin{scope}[semithick, fuchsia]}{\begin{scope}}
+					\node (1) at (108:2) {1};
+					\node (2) at (144:2) {2};
+				\end{scope}
+				\node (3) at (180:2) {3};
+				\node (4) at (216:2) {4};
+				\node (5) at (252:2) {5};
+				\node (6) at (288:2) {6};
+				\node (7) at (324:2) {7};
+				\node (8) at (0:2)   {8};
+				\alt<6>{\begin{scope}[semithick, fuchsia]}{\begin{scope}}
+					\node (9) at (36:2) {9};
+				\end{scope}
+				\node (10)at (72:2) {10};
+				\only<5->{
+					\alt<6>{\begin{scope}[semithick, fuchsia]}{\begin{scope}}
+						\node (1e) at (108:3.333333) {\small 1$'$};
+					\end{scope}
+					\node (2e) at (144:3.333333) {\small 2$'$};
+					\node (3e) at (180:3.333333) {\small 3$'$};
+					\node (4e) at (216:3.333333) {\small 4$'$};
+					\node (5e) at (252:3.333333) {\small 5$'$};
+					\node (6e) at (288:3.333333) {\small 6$'$};
+					\node (7e) at (324:3.333333) {\small 7$'$};
+					\node (8e) at (0:3.333333)   {\small 8$'$};
+					\node (9e) at (36:3.333333)  {\small 9$'$};
+					\node (10e)at (72:3.333333)  {\small 10$'$};
+				}
+			\end{scope}
+			\only<4>{
+				\begin{scope}[->, semithick, blue]
+					\draw (120:3) arc[radius=3, start angle=120, end angle=150];
+					\draw (60:3) arc[radius=3, start angle=60, end angle=30];
+				\end{scope}
+				\node[blue] at (0, 2.9) {?};
+			}
+			\alt<-4>{
+				\path (1) edge (2) (2) edge (3) (3) edge (4) (4) edge (5) (5) edge (6) (6) edge (7) (7) edge (8) (8) edge (9) (9) edge (10) (10) edge (1);
+			}{
+				\path[->] (1) edge (2) (2) edge (3) (3) edge (4) (4) edge (5) (5) edge (6) (6) edge (7) (7) edge (8) (8) edge (9) (9) edge (10) (10) edge (1);
+			}
+			\only<6->{
+				\path[semithick, fuchsia] (1e) edge (1) edge (2) edge[bend left=25] (9);
+			}
+			\only<7->{
+				\begin{scope}[semithick]
+					\path[blue]			(2e) edge (2) edge (3) edge[bend left=25] (10);
+					\path[orange]		(3e) edge (3) edge (4) edge[bend left=25] (1);
+					\path[aqua]			(4e) edge (4) edge (5) edge[bend left=25] (2);
+					\path[properpink]	(5e) edge (5) edge (6) edge[bend left=25] (3);
+					\path[yellow]		(6e) edge (6) edge (7) edge[bend left=25] (4);
+					\path[properpurple]	(7e) edge (7) edge (8) edge[bend left=25] (5);
+					\path[red]			(8e) edge (8) edge (9) edge[bend left=25] (6);
+					\path[green]		(9e) edge (9) edge (10)edge[bend left=25] (7);
+					\path[color={rgb,255:red,101;green,16;blue,173}] (10e) edge (10) edge (1) edge[bend left=25] (8);
+				\end{scope}
+			}
+		\end{tikzpicture}
+	\end{figure}
+
+	\onslide<8->{这个构造适用于 $n \geq 6$。}
+}
+
+\sol {
+	$n \leq 5$ 时，我们可以给一个稍劣一点的构造：\pause
+
+	\begin{figure}[htb]
+		\hspace{-17pt}\centerline{
+		\begin{minipage}[t]{40pt}
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-0.01, -2.5) rectangle (0.01, 2.5);
+				\fill[nearly opaque, white] (-1, -2.5) rectangle (25, 2.75);
+				\node[draw, circle, minimum size=15pt] {1};
+			\end{tikzpicture}
+			\caption{$Z_1$}
+		\end{minipage}
+		\begin{minipage}[t]{40pt}
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-0.01, -2.5) rectangle (0.01, 2.5);
+				\begin{scope}[circle, minimum size=15pt, every node/.style=draw]
+					\node (1) at (0, 0.6) {1};
+					\node (2) at (0, -0.6) {2};
+				\end{scope}
+				\path (1) edge (2);
+			\end{tikzpicture}
+			\caption{$Z_2$}
+		\end{minipage}
+		\begin{minipage}[t]{60pt}
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-0.01, -2.5) rectangle (0.01, 2.5);
+				\begin{scope}[circle, minimum size=15pt, every node/.style=draw]
+					\node[blue, thick] (1) at (0, 0.69282)		{1} (1) node[properpurple, semithick] (A) at +(180:1.2) {A} node[fuchsia] (a) at +(120:1.2) {a};
+					\node[blue, thick] (2) at (-0.6, -0.34641)	{2} (2) node[properpurple, semithick] (B) at +(300:1.2) {B} node[fuchsia] (b) at +(240:1.2) {b};
+					\node[blue, thick] (3) at (0.6, -0.34641)	{3} (3) node[properpurple, semithick] (C) at +(60:1.2) {C} node[fuchsia] (c) at +(  0:1.2) {c};
+				\end{scope}
+				\path (1) edge[blue, thick] (2) edge[fuchsia] (a);
+				\path (2) edge[blue, thick] (3) edge[fuchsia] (b);
+				\path (3) edge[blue, thick] (1) edge[fuchsia] (c);
+				\path (A) edge[properpurple, semithick] (1) edge[properpurple, semithick] (2) edge[fuchsia] (a);
+				\path (B) edge[properpurple, semithick] (2) edge[properpurple, semithick] (3) edge[fuchsia] (b);
+				\path (C) edge[properpurple, semithick] (3) edge[properpurple, semithick] (1) edge[fuchsia] (c);
+			\end{tikzpicture}
+			\caption{$Z_3$}
+		\end{minipage}
+		\begin{minipage}[t]{120pt}
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-0.01, -2.5) rectangle (0.01, 2.5);
+				\begin{scope}[circle, minimum size=15pt, every node/.style=draw]
+					\node[blue, thick] (1) at (-0.6, 0.6)	{1} (1) node[properpurple, semithick] (A) at +(210:1.2) {A} node[fuchsia] (a) at +(150:1.2) {a};
+					\node[blue, thick] (2) at (-0.6, -0.6)	{2} (2) node[properpurple, semithick] (B) at +(300:1.2) {B} node[fuchsia] (b) at +(240:1.2) {b};
+					\node[blue, thick] (3) at (0.6, -0.6)	{3} (3) node[properpurple, semithick] (C) at +( 30:1.2) {C} node[fuchsia] (c) at +(330:1.2) {c};
+					\node[blue, thick] (4) at (0.6, 0.6)	{4} (4) node[properpurple, semithick] (D) at +(120:1.2) {D} node[fuchsia] (d) at +( 60:1.2) {d};
+				\end{scope}
+				\path (1) edge[blue, thick] (2) edge[fuchsia] (a);
+				\path (2) edge[blue, thick] (3) edge[fuchsia] (b);
+				\path (3) edge[blue, thick] (4) edge[fuchsia] (c);
+				\path (4) edge[blue, thick] (1) edge[fuchsia] (d);
+				\path (A) edge[properpurple, semithick] (1) edge[properpurple, semithick] (2) edge[fuchsia] (a);
+				\path (B) edge[properpurple, semithick] (2) edge[properpurple, semithick] (3) edge[fuchsia] (b);
+				\path (C) edge[properpurple, semithick] (3) edge[properpurple, semithick] (4) edge[fuchsia] (c);
+				\path (D) edge[properpurple, semithick] (4) edge[properpurple, semithick] (1) edge[fuchsia] (d);
+			\end{tikzpicture}
+			\caption{$Z_4$}
+		\end{minipage}
+		\begin{minipage}[t]{70pt}
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-0.01, -2.5) rectangle (0.01, 2.5);
+				\begin{scope}[circle, minimum size=15pt, every node/.style=draw]
+					\node[blue, thick] (1) at (0, 1.020781)			{1} (1) node[properpurple, semithick] (A) at +(156:1.2) {A} node[fuchsia] (a) at +( 96:1.2) {a};
+					\node[blue, thick] (2) at (-0.970820, 0.315439)	{2} (2) node[properpurple, semithick] (B) at +(228:1.2) {B} node[fuchsia] (b) at +(168:1.2) {b};
+					\node[blue, thick] (3) at (-0.6, -0.825829)		{3} (3) node[properpurple, semithick] (C) at +(300:1.2) {C} node[fuchsia] (c) at +(240:1.2) {c};
+					\node[blue, thick] (4) at (0.6, -0.825829)		{4} (4) node[properpurple, semithick] (D) at +( 12:1.2) {D} node[fuchsia] (d) at +(312:1.2) {d};
+					\node[blue, thick] (5) at (0.970820, 0.315439)	{5} (5) node[properpurple, semithick] (E) at +( 84:1.2) {E} node[fuchsia] (e) at +( 24:1.2) {e};
+				\end{scope}
+				\path (1) edge[blue, thick] (2) edge[fuchsia] (a);
+				\path (2) edge[blue, thick] (3) edge[fuchsia] (b);
+				\path (3) edge[blue, thick] (4) edge[fuchsia] (c);
+				\path (4) edge[blue, thick] (5) edge[fuchsia] (d);
+				\path (5) edge[blue, thick] (1) edge[fuchsia] (e);
+				\path (A) edge[properpurple, semithick] (1) edge[properpurple, semithick] (2) edge[fuchsia] (a);
+				\path (B) edge[properpurple, semithick] (2) edge[properpurple, semithick] (3) edge[fuchsia] (b);
+				\path (C) edge[properpurple, semithick] (3) edge[properpurple, semithick] (4) edge[fuchsia] (c);
+				\path (D) edge[properpurple, semithick] (4) edge[properpurple, semithick] (5) edge[fuchsia] (d);
+				\path (E) edge[properpurple, semithick] (5) edge[properpurple, semithick] (1) edge[fuchsia] (e);
+			\end{tikzpicture}
+			\caption{$Z_5$}
+		\end{minipage}
+		}
+	\end{figure}
+}
+
+\sol {
+	对于 $S$ 为一般群的情形，我们有\pause
+
+	\begin{theoe}[Cayley]
+		\vspace{-4pt}\hspace{2em}任何一个有限群 $S$ 都同构于一个 $S$ 上的置换群，同构于一个由 $\abs S$ 元置换构成的群。具体地，令左乘变换 $\varphi_g(x) = g \circ x$ 为 $S$ 上的一个置换，则所有 $\abs S$ 个置换构成的群与 $S$ 同构。
+	\end{theoe}\pause
+
+	这说明，对于任意群 $S$，它一定同构于其自同构群 $\operatorname{Aut} S$ 的一个子群。根据这种思路，我们构建出一些图 $G$，使得 $S$ 同构于 $\operatorname{Aut} G$ 的一个子群。
+}
+
+\sol {\vspace{16pt}
+	\begin{defie}[Cayley graph]
+		\vspace{-4pt}\hspace{2em}对于群 $(S, \circ)$ 和子集 $H \subseteq S$，定义 $H$ 在 $S$ 中生成的 Cayley 图为一张有向图 $G = (V, E)$，记作 $\Gamma(S, H)$，其中\vspace{-8pt}\[ V = S, \ E = \left\{ \bigl( x, \varphi_g(x) \bigr) \middle\arrowvert x \in S \right\}. \]
+
+		\vspace{-10pt}
+	\end{defie}\pause
+
+	\vspace{-4pt}
+	注意到所有 $\varphi_g$ 均为 $\Gamma(S, H)$ 的自同构，于是
+	\begin{theoe}
+		\vspace{-4pt}\hspace{2em}对于 $\forall H \subseteq S$，设 $G = \Gamma(S, H)$ 是 $H$ 在 $S$ 中生成的 Cayley 图，则 $S$ 同构于 $\operatorname{Aut} G$ 的一个子群。
+	\end{theoe}
+
+	\vspace{-4pt}
+	{\scriptsize 注：关于图有向无向的问题，如果我们取的 $H$ 满足 $x \in H \iff x^{-1} \in H$，那么所得的图 $G$ 就自然可以看成一张无向图。}
+}
+
+\sol {
+	现在我们已经成功让所有 $\varphi_g$ 均成为 $G$ 的自同构，现在要做的，就是\textsl{不让 $G$ 中出现其它的自同构}。\pause
+
+	由于群中所有元素可逆，因此任给元素 $x, y \in S$，使得 $\varphi_g(x) = y$ 的 $g$ \emm{\textsl{存在且唯一}}。\pause
+
+	因此，对于图中任意一个点 $x \in S$，应当存在唯一的 $g$ 使得 $\varphi_g(e) = x$。\pause
+
+	而事实上其中的 $g$ 就等于 $x$。因此我们只需保证\textsl{存在唯一的自同构，将顶点 $e$ 置换到顶点 $x$}。\pause
+
+	要达成这一点，我们只需要``\textsl{在给定 $\varphi(e) = x$ 的条件下，可以唯一确定其它元素的像}''即可。
+}
+
+\sol {\vspace{20pt}
+	以 $S \mathbin= \left< x, y, \omega \middle\arrowvert x^3 \!=\! y^3 \!=\! \omega^2 \!=\! (\omega x)^2 \!=\! (\omega y)^2 \!=\! x y x^{-1} y^{-1} \!=\! 1 \right>$ 为例，这是一个 $18$ 阶群，其中 $\{ x, y, \omega \}$ 为它的一个生成集。\pause
+
+	该群的 Cayley 图如下：\pause
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.75cm, y=.75cm]
+			\useasboundingbox (-2.1, -0.7) rectangle (5.8, 5.8);
+			\fill[nearly opaque, white] (-2.1, -0.7) rectangle (5.8, 6);
+			\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style=draw]
+				\node (00) at (0.0, 0.0) {\alt<8->{}{\scriptsize $1$}};
+				\node (01) at (2.5, -.15){\alt<8->{}{\scriptsize $x$}};
+				\node (02) at (5.0, 0.2) {\alt<8->{}{\scriptsize $x^2$}};
+				\node (03) at (0.2, 2.1) {\alt<8->{}{\scriptsize $y$}};
+				\node (04) at (2.7, 1.95){\alt<8->{}{\scriptsize $x y$}};
+				\node (05) at (5.2, 2.3) {\alt<8->{}{\scriptsize $x^2 y$}};
+				\node (06) at (-.2, 4.2) {\alt<8->{}{\scriptsize $y^2$}};
+				\node (07) at (2.3, 4.05){\alt<8->{}{\scriptsize $x y^2$}};
+				\node (08) at (4.8, 4.4) {\alt<8->{}{\scriptsize $x^2 y^2$}};
+				\begin{scope}[shift={(-1.3, 1)}]
+					\node (10) at (0.0, 0.0) {\alt<8->{}{\scriptsize $\omega$}};
+					\node (11) at (5.0, 0.2) {\alt<8->{}{\scriptsize $x \omega$}};
+					\node (12) at (2.5, -.15){\alt<8->{}{\scriptsize $x^2 \omega$}};
+					\node (13) at (-.2, 4.2) {\alt<8->{}{\scriptsize $y \omega$}};
+					\node (14) at (4.8, 4.4) {\alt<8->{}{\scriptsize $x y \omega$}};
+					\node (15) at (2.3, 4.05){\alt<8->{}{\scriptsize $x^2 y \omega$}};
+					\node (16) at (0.2, 2.1) {\alt<8->{}{\scriptsize $y^2 \omega$}};
+					\node (17) at (5.2, 2.3) {\alt<8->{}{\scriptsize $x y^2 \omega$}};
+					\node (18) at (2.7, 1.95){\alt<8->{}{\scriptsize $x\mskip-2mu^2 \mskip-2mu y\mskip-2mu^2 \mskip-2mu \omega$}};
+				\end{scope}
+			\end{scope}
+			\alt<-6>{\begin{scope}[->, semithick]}{\begin{scope}[semithick]}
+				\only<4->{
+					\path[fuchsia]
+						(00) edge (01) (01) edge (02) (02) edge[bend right=10] (00) (03) edge (04) (04) edge (05) (05) edge[bend right=10] (03) (06) edge (07) (07) edge (08) (08) edge[bend right=10] (06)
+						(10) edge[bend left=10] (11) (11) edge (12) (12) edge (10) (13) edge[bend left=10] (14) (14) edge (15) (15) edge (13) (16) edge[bend left=10] (17) (17) edge (18) (18) edge (16);
+				}
+				\only<5->{
+					\path[blue]
+						(00) edge (03) (01) edge (04) (02) edge (05) (03) edge (06) (04) edge (07) (05) edge (08) (06) edge[bend right=10] (00) (07) edge[bend right=10] (01) (08) edge[bend right=10] (02)
+						(10) edge[bend left=10] (13) (11) edge[bend left=10] (14) (12) edge[bend left=10] (15) (13) edge (16) (14) edge (17) (15) edge (18) (16) edge (10) (17) edge (11) (18) edge (12);
+				}
+			\end{scope}
+			\only<6>{
+				\path[->, semithick, red, bend left=15]
+					(00) edge (10) (10) edge (00) (01) edge (12) (12) edge (01) (02) edge (11) (11) edge (02)
+					(03) edge (16) (16) edge (03) (04) edge (18) (18) edge (04) (05) edge (17) (17) edge (05)
+					(06) edge (13) (13) edge (06) (07) edge (15) (15) edge (07) (08) edge (14) (14) edge (08);
+			}
+			\only<7->{
+				\path[semithick, red]
+					(00) edge (10) (01) edge (12) (02) edge (11)
+					(03) edge (16) (04) edge (18) (05) edge (17)
+					(06) edge (13) (07) edge (15) (08) edge (14);
+			}
+		\end{tikzpicture}
+	\end{figure}
+}
+
+\sol {
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.75cm, y=.75cm]
+			\useasboundingbox (-2, -2.1) rectangle (7, 2.1);
+			\fill[nearly opaque, white] (-2, -2.1) rectangle (7, 2.1);
+			\begin{scope}[circle, minimum size=15pt, every node/.style=draw]
+				\node (1) {\footnotesize $g$};
+				\only<2->{
+					\node (2) at ( 18:1.5) {};
+					\node (3) at ( 90:1.5) {};
+					\node (4) at (162:1.5) {};
+					\node (5) at (234:1.5) {};
+					\node (6) at (306:1.5) {};
+				}
+			\end{scope}
+			\only<2->{\path (1) edge (2) edge (3) edge (4) edge (5) edge (6);}
+			\only<3->{
+				\node[draw, rounded corners, inner sep=3pt, rectangle split, rectangle split parts=5] at (6, 0)
+					{\footnotesize $\color{fuchsia} \vphantom{^{-1}} x g$%
+					\nodepart{two}\footnotesize $\color{fuchsia} x^{-1} g$%
+					\nodepart{three}\footnotesize $\color{blue} \vphantom{^{-1}} y g$%
+					\nodepart{four}\footnotesize $\color{blue} y^{-1} g$%
+					\nodepart{five}\footnotesize $\color{red} \vphantom{^{-1}} \omega g$};
+			}
+			\only<4->{\draw[<->] (2.5, 0) -- node[above, inner sep=2pt] {?} (4.5, 0);}
+		\end{tikzpicture}
+	\end{figure}
+
+	\onslide<5->{\hspace{-1em}这样显然是无法还原的，\!因为我们丢失了\emm{\textsl{方向}}信息和\emm{\textsl{顺序}}信息。\hspace{-1em}}
+}
+
+\sol {
+	如何在图中还原列表的顺序？\pause
+
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}
+			\begin{scope}[circle, minimum size=15pt, every node/.style=draw]
+				\node (0) at (0, 1.6) {};
+				\node (1) at (-1.6, 0) {1};
+				\node (2) at (-0.8, 0) {2};
+				\node (3) at (0, 0) {3};
+				\node (4) at (0.8, 0) {4};
+				\node (5) at (1.6, 0) {5};
+				\draw[->, dashed, semithick, blue] (-1.54, -0.5) -- (1.54, -0.5);
+				\begin{scope}[shift={(4, 0.8)}]
+					\node (A) at (0, 0) {};
+					\node (B) at (234:1) {1};
+					\node (C) at (162:1) {2};
+					\node (D) at ( 90:1) {3};
+					\node (E) at ( 18:1) {4};
+					\node (F) at (306:1) {5};
+					\draw[->, dashed, semithick, blue] (225:1.5) arc[radius=1.5, start angle=225, end angle=-45];
+				\end{scope}
+			\end{scope}
+			\path (0) edge[->, semithick, fuchsia] (1) edge (2) edge (3) edge (4) edge (5)
+				(1) edge (2) (2) edge (3) (3) edge (4) (4) edge (5);
+			\path (A) edge[->, semithick, fuchsia] (B) edge (C) edge (D) edge (E) edge (F)
+				(B) edge (C) (C) edge (D) (D) edge (E) (E) edge (F);
+		\end{tikzpicture}
+		\caption{}
+	\end{figure}
+
+	经典构造：知``1''推序列。
+}
+
+\sol {\vspace{16pt}
+	如何还原方向？\pause Clone!
+
+	\only<-2>{
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.75cm, y=.75cm]
+			\useasboundingbox (-4.8, -1.5) rectangle (8.5, 6.8);
+			\fill[nearly opaque, white] (-4.8, -1.5) rectangle (8.5, 6.8);
+			\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style={transform shape, draw}]
+				\node (00) at (0.0, 0.0) {\scriptsize $1$};
+				\node (01) at (2.5, -.15){\scriptsize $x$};
+				\node (02) at (5.0, 0.2) {\scriptsize $x^2$};
+				\node (03) at (0.2, 2.1) {\scriptsize $y$};
+				\node (04) at (2.7, 1.95){\scriptsize $x y$};
+				\node (05) at (5.2, 2.3) {\scriptsize $x^2 y$};
+				\node (06) at (-.2, 4.2) {\scriptsize $y^2$};
+				\node (07) at (2.3, 4.05){\scriptsize $x y^2$};
+				\node (08) at (4.8, 4.4) {\scriptsize $x^2 y^2$};
+				\begin{scope}[shift={(-1.3, 1)}]
+					\node (10) at (0.0, 0.0) {\scriptsize $\omega$};
+					\node (11) at (5.0, 0.2) {\scriptsize $x \omega$};
+					\node (12) at (2.5, -.15){\scriptsize $x^2 \omega$};
+					\node (13) at (-.2, 4.2) {\scriptsize $y \omega$};
+					\node (14) at (4.8, 4.4) {\scriptsize $x y \omega$};
+					\node (15) at (2.3, 4.05){\scriptsize $x^2 y \omega$};
+					\node (16) at (0.2, 2.1) {\scriptsize $y^2 \omega$};
+					\node (17) at (5.2, 2.3) {\scriptsize $x y^2 \omega$};
+					\node (18) at (2.7, 1.95){\scriptsize $x\mskip-2mu^2 \mskip-2mu y\mskip-2mu^2 \mskip-2mu \omega$};
+				\end{scope}
+			\end{scope}
+			\begin{scope}[->, semithick]
+				\path[fuchsia]
+					(00) edge (01) (01) edge (02) (02) edge[bend right=10] (00) (03) edge (04) (04) edge (05) (05) edge[bend right=10] (03) (06) edge (07) (07) edge (08) (08) edge[bend right=10] (06)
+					(10) edge[bend left=10] (11) (11) edge (12) (12) edge (10) (13) edge[bend left=10] (14) (14) edge (15) (15) edge (13) (16) edge[bend left=10] (17) (17) edge (18) (18) edge (16);
+				\path[blue]
+					(00) edge (03) (01) edge (04) (02) edge (05) (03) edge (06) (04) edge (07) (05) edge (08) (06) edge[bend right=10] (00) (07) edge[bend right=10] (01) (08) edge[bend right=10] (02)
+					(10) edge[bend left=10] (13) (11) edge[bend left=10] (14) (12) edge[bend left=10] (15) (13) edge (16) (14) edge (17) (15) edge (18) (16) edge (10) (17) edge (11) (18) edge (12);
+				\path[red, bend left=15]
+					(00) edge (10) (10) edge (00) (01) edge (12) (12) edge (01) (02) edge (11) (11) edge (02)
+					(03) edge (16) (16) edge (03) (04) edge (18) (18) edge (04) (05) edge (17) (17) edge (05)
+					(06) edge (13) (13) edge (06) (07) edge (15) (15) edge (07) (08) edge (14) (14) edge (08);
+			\end{scope}
+		\end{tikzpicture}
+	\end{figure}
+	}
+
+	\only<3->{
+	\begin{figure}[htb]
+		\centering
+		\begin{tikzpicture}[x=.75cm, y=.75cm]
+			\useasboundingbox (-2.3, -5.5) rectangle (11, 2.8);
+			\fill[nearly opaque, white] (-2.3, -5.5) rectangle (11, 2.8);
+			\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, 0)}]
+				\coordinate (LF) at (-2.1, -0.7);
+				\coordinate (RF) at ( 5.8, -0.7);
+				\coordinate (LB) at (-2.1, 6);
+				\coordinate (RB) at ( 5.8, 6);
+			\end{scope}
+			\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, -4)}]
+				\coordinate (lf) at (-2.1, -0.7);
+				\coordinate (rf) at ( 5.8, -0.7);
+				\coordinate (lb) at (-2.1, 6);
+				\coordinate (rb) at ( 5.8, 6);
+			\end{scope}
+			\draw (lf) -- (LF) (RF) -- +(0, -0.471288) edge[help lines, dashed] (rf) (lb) -- +(0, 0.471288) (rb) -- (RB);
+			% contents
+			\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, 0)}]
+				\draw (LF) rectangle (RB);
+				\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style={transform shape, draw}]
+					\node (00) at (0.0, 0.0) {\scriptsize $1$};
+					\node (01) at (2.5, -.15){\scriptsize $x$};
+					\node (02) at (5.0, 0.2) {\scriptsize $x^2$};
+					\node (03) at (0.2, 2.1) {\scriptsize $y$};
+					\node (04) at (2.7, 1.95){\scriptsize $x y$};
+					\node (05) at (5.2, 2.3) {\scriptsize $x^2 y$};
+					\node (06) at (-.2, 4.2) {\scriptsize $y^2$};
+					\node (07) at (2.3, 4.05){\scriptsize $x y^2$};
+					\node (08) at (4.8, 4.4) {\scriptsize $x^2 y^2$};
+					\begin{scope}[shift={(-1.3, 1)}]
+						\node (10) at (0.0, 0.0) {\scriptsize $\omega$};
+						\node (11) at (5.0, 0.2) {\scriptsize $x \omega$};
+						\node (12) at (2.5, -.15){\scriptsize $x^2 \omega$};
+						\node (13) at (-.2, 4.2) {\scriptsize $y \omega$};
+						\node (14) at (4.8, 4.4) {\scriptsize $x y \omega$};
+						\node (15) at (2.3, 4.05){\scriptsize $x^2 y \omega$};
+						\node (16) at (0.2, 2.1) {\scriptsize $y^2 \omega$};
+						\node (17) at (5.2, 2.3) {\scriptsize $x y^2 \omega$};
+						\node (18) at (2.7, 1.95){\scriptsize $x\mskip-2mu^2 \mskip-2mu y\mskip-2mu^2 \mskip-2mu \omega$};
+					\end{scope}
+				\end{scope}
+				\alt<-3>{
+					\begin{scope}[->, semithick]
+						\path[fuchsia]
+							(00) edge (01) (01) edge (02) (02) edge[bend right=10] (00) (03) edge (04) (04) edge (05) (05) edge[bend right=10] (03) (06) edge (07) (07) edge (08) (08) edge[bend right=10] (06)
+							(10) edge[bend left=10] (11) (11) edge (12) (12) edge (10) (13) edge[bend left=10] (14) (14) edge (15) (15) edge (13) (16) edge[bend left=10] (17) (17) edge (18) (18) edge (16);
+						\path[blue]
+							(00) edge (03) (01) edge (04) (02) edge (05) (03) edge (06) (04) edge (07) (05) edge (08) (06) edge[bend right=10] (00) (07) edge[bend right=10] (01) (08) edge[bend right=10] (02)
+							(10) edge[bend left=10] (13) (11) edge[bend left=10] (14) (12) edge[bend left=10] (15) (13) edge (16) (14) edge (17) (15) edge (18) (16) edge (10) (17) edge (11) (18) edge (12);
+						\path[red, bend left=15]
+							(00) edge (10) (10) edge (00) (01) edge (12) (12) edge (01) (02) edge (11) (11) edge (02)
+							(03) edge (16) (16) edge (03) (04) edge (18) (18) edge (04) (05) edge (17) (17) edge (05)
+							(06) edge (13) (13) edge (06) (07) edge (15) (15) edge (07) (08) edge (14) (14) edge (08);
+					\end{scope}
+				}{
+					\path[semithick, fuchsia]
+						(00) edge (01) (01) edge (02) (02) edge[bend right=10] (00) (03) edge (04) (04) edge (05) (05) edge[bend right=10] (03) (06) edge (07) (07) edge (08) (08) edge[bend right=10] (06)
+						(10) edge[bend left=10] (11) (11) edge (12) (12) edge (10) (13) edge[bend left=10] (14) (14) edge (15) (15) edge (13) (16) edge[bend left=10] (17) (17) edge (18) (18) edge (16);
+				}
+			\end{scope}
+			\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, -4)}]
+				\draw (lf) rectangle (rb);
+				\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style={transform shape, draw}]
+					\node (20) at (0.0, 0.0) {\scriptsize $1$};
+					\node (21) at (2.5, -.15){\scriptsize $x$};
+					\node (22) at (5.0, 0.2) {\scriptsize $x^2$};
+					\node (23) at (0.2, 2.1) {\scriptsize $y$};
+					\node (24) at (2.7, 1.95){\scriptsize $x y$};
+					\node (25) at (5.2, 2.3) {\scriptsize $x^2 y$};
+					\node (26) at (-.2, 4.2) {\scriptsize $y^2$};
+					\node (27) at (2.3, 4.05){\scriptsize $x y^2$};
+					\node (28) at (4.8, 4.4) {\scriptsize $x^2 y^2$};
+					\begin{scope}[shift={(-1.3, 1)}]
+						\node (30) at (0.0, 0.0) {\scriptsize $\omega$};
+						\node (31) at (5.0, 0.2) {\scriptsize $x \omega$};
+						\node (32) at (2.5, -.15){\scriptsize $x^2 \omega$};
+						\node (33) at (-.2, 4.2) {\scriptsize $y \omega$};
+						\node (34) at (4.8, 4.4) {\scriptsize $x y \omega$};
+						\node (35) at (2.3, 4.05){\scriptsize $x^2 y \omega$};
+						\node (36) at (0.2, 2.1) {\scriptsize $y^2 \omega$};
+						\node (37) at (5.2, 2.3) {\scriptsize $x y^2 \omega$};
+						\node (38) at (2.7, 1.95){\scriptsize $x\mskip-2mu^2 \mskip-2mu y\mskip-2mu^2 \mskip-2mu \omega$};
+					\end{scope}
+				\end{scope}
+				\begin{scope}[->, semithick]
+					\only<-4>{
+						\path[fuchsia]
+							(20) edge (21) (21) edge (22) (22) edge[bend right=10] (20) (23) edge (24) (24) edge (25) (25) edge[bend right=10] (23) (26) edge (27) (27) edge (28) (28) edge[bend right=10] (26)
+							(30) edge[bend left=10] (31) (31) edge (32) (32) edge (30) (33) edge[bend left=10] (34) (34) edge (35) (35) edge (33) (36) edge[bend left=10] (37) (37) edge (38) (38) edge (36);
+					}
+					\only<-5>{
+						\path[blue]
+							(20) edge (23) (21) edge (24) (22) edge (25) (23) edge (26) (24) edge (27) (25) edge (28) (26) edge[bend right=10] (20) (27) edge[bend right=10] (21) (28) edge[bend right=10] (22)
+							(30) edge[bend left=10] (33) (31) edge[bend left=10] (34) (32) edge[bend left=10] (35) (33) edge (36) (34) edge (37) (35) edge (38) (36) edge (30) (37) edge (31) (38) edge (32);
+					}
+					\only<-6>{
+						\path[red, bend left=15]
+							(20) edge (30) (30) edge (20) (21) edge (32) (32) edge (21) (22) edge (31) (31) edge (22)
+							(23) edge (36) (36) edge (23) (24) edge (38) (38) edge (24) (25) edge (37) (37) edge (25)
+							(26) edge (33) (33) edge (26) (27) edge (35) (35) edge (27) (28) edge (34) (34) edge (28);
+					}
+					\only<8->{
+						\path[-, aqua]
+							(20) edge (25) (21) edge[bend right=20] (23) (22) edge[bend left] (24) (23) edge (28) (24) edge[bend left] (26) (25) edge[bend left=20] (27) (26) edge[bend left=20] (22) (27) edge (20) (28) edge (21);
+						\path[-, thin, densely dashed, aqua!75!black]
+							(30) edge (35) (31) edge[bend left=20] (33) (32) edge (34) (33) edge[bend left] (38) (34) edge (36) (35) edge[bend left=20] (37) (36) edge[bend right=20] (32) (37) edge (30) (38) edge[bend left] (31);
+					}
+					\only<9->{
+						\path[-, yellow!90!black]
+							(20) edge[bend left=10] (33) (21) edge[bend left=10] (35) (22) edge[bend left=10] (34) (23) edge (30) (24) edge (32) (25) edge (31) (26) edge (36) (27) edge (38) (28) edge (37);
+					}
+				\end{scope}
+			\end{scope}
+			\only<4->{
+				\begin{scope}[semithick, orange]
+					\path
+						(00) edge (20) (01) edge (21) (02) edge (22) (03) edge (23) (04) edge (24) (05) edge (25) (08) edge (28)
+						(10) edge (30) (11) edge (31) (12) edge (32) (14) edge (34) (16) edge (36) (17) edge (37) (18) edge (38);
+					\alt<-6>{
+						\path (06) edge (26) (07) edge (27) (13) edge (33) (15) edge (35);
+					}{
+						\path[thin, densely dotted] (06) edge (26) (07) edge (27) (13) edge (33) (15) edge (35);
+					}
+				\end{scope}
+			}
+			\only<5->{
+				\begin{scope}[green!50!black, every path/.style={path fading=fadingF13}]
+					\draw (00) to (21);
+					\draw (01) to (22);
+					\draw (02) to[bend right=10] (20);
+					\draw (03) to (24);
+					\draw (04) to (25);
+					\draw (05) to[bend right=10] (23);
+					\draw (06) to (27);
+					\draw (07) to (28);
+					\draw (08) to[bend right=10] (26);
+				\end{scope}
+				\begin{scope}[densely dotted, green!50!black, every path/.style={path fading=fadingF24}]
+					\draw (10) to (31);
+					\draw (11) to (32);
+					\draw (12) to (30);
+					\draw (13) to (34);
+					\draw (14) to (35);
+					\draw (15) to (33);
+					\draw (16) to (37);
+					\draw (17) to (38);
+					\draw (18) to (36);
+				\end{scope}
+			}
+			\only<6->{
+				\begin{scope}[blue, every path/.style={path fading=fadingF13}]
+					\draw (00) to[bend left=10] (23);
+					\draw (01) to[bend left=10] (24);
+					\draw (02) to[bend left=10] (25);
+					\draw (03) to[bend left=10] (26);
+					\draw (04) to[bend left=10] (27);
+					\draw (05) to[bend left=10] (28);
+					\draw (06) to[bend right=20] (20);
+					\draw (07) to[bend right=20] (21);
+					\draw (08) to[bend right=20] (22);
+				\end{scope}
+				\begin{scope}[densely dotted, blue, every path/.style={path fading=fadingF24}]
+					\draw (10) to[bend left=10] (33);
+					\draw (11) to[bend left=10] (34);
+					\draw (12) to[bend left=10] (35);
+					\draw (13) to[bend right=10] (36);
+					\draw (14) to[bend right=10] (37);
+					\draw (15) to[bend right=10] (38);
+					\draw (16) to[bend right=10] (30);
+					\draw (17) to[bend right=10] (31);
+					\draw (18) to[bend right=10] (32);
+				\end{scope}
+			}
+			\only<7->{
+				\path[red]
+					(00) edge (30) (02) edge (31) (03) edge (36) (05) edge (37) (06) edge[densely dotted] (33) (08) edge (34)
+					(10) edge (20) (11) edge (22) (13) edge[densely dotted] (26) (14) edge (28) (16) edge (23) (17) edge (25)
+					(01) edge (32) (04) edge (38) (07) edge[densely dotted] (35) (12) edge (21) (15) edge[densely dotted] (27) (18) edge (24);
+			}
+			\only<8>{
+				\node[draw, align=center, inner sep=3pt] at (10.4, -1) {\footnotesize $\bigl( {\color{fuchsia}\varphi_x}(g), {\color{blue}\varphi_y}(g) \bigr)$ \\ \footnotesize $\left( g, {\color{aqua!75!black} y x^{-1}} g \right)$};
+			}
+			\only<9>{
+				\node[draw, align=center, inner sep=3pt] at (10.4, -1) {\footnotesize $\bigl( {\color{blue}\varphi_y}(g), {\color{red}\varphi_\omega}(g) \bigr)$ \\ \footnotesize $\left( g, {\color{yellow!90!black} \omega y^{-1}} g \right)$};
+			}
+		\end{tikzpicture}
+	\end{figure}
+	}
+}
+
+\sol {\vspace{12pt}
+	记所得到的新图中上层为 $G_1$，下层为 $G_2$，所做的 Cayley 图中所取的子集为 $H = \{h_1, h_2, \ldots, h_d\}$。\pause
+
+	还原的具体步骤：\pause
+	\begin{enumerate}
+		\divide\itemsep4%
+		\item 区分 $G_1$ 和 $G_2$。\pause
+		\item 找到 $G_1$ 中的点和 $G_2$ 中的点的一一对应关系 $\psi$。\pause
+		\item 任取 $G_1$ 中一点 $v$ 作为 $e$ 的像 $\varphi(e)$。\pause
+		\item 已知 $\varphi(x) = y$，找到 $\varphi(h_1 x)$ 对应的点。\pause
+		\item 在步骤 4 的条件下，\!依次找到 $\varphi(h_2 x), \ldots, \varphi(h_d x)$ 对应的点。\pause
+		\item<succ@10> 重复步骤 4, 5，直到所有 $\varphi(x)$ 均被求出。
+	\end{enumerate}\pause
+
+	若通过步骤 6 能求出所有元素的像，$H$ 必须能\emm{\textsl{生成}} 群 $S$，即，$\color{fuchsia}\<H\> = S$。
+}
+
+\sol[t] {
+	\alt<2->{
+		\vspace{12pt}
+		{\color{fuchsia}\large 区分 $G_1$ 和 $G_2$。}
+		\vspace{16pt}
+
+		\onslide<3->{$G_1, G_2$ 均为正则图。\pause $\color{red} \Delta(G_1) \leq 2 \ \color{black} !$}
+
+		\onslide<4->{$\abs S \neq 1, 3, 5 \pause \;\Rightarrow\; \Delta(G_2)$ 和 $(\abs S - 1) - \Delta(G_2)$ 至少有一个和 $\Delta(G_1)$ 不同。}
+
+		\onslide<5->{\usebeamercolor[fg]{success text}用度数区分！}
+	}{
+		\vspace{34pt}
+		\begin{enumerate}
+			\item<alert@1-> 区分 $G_1$ 和 $G_2$。
+			\item 找到 $G_1$ 中的点和 $G_2$ 中的点的一一对应关系 $\psi$。
+			\item 任取 $G_1$ 中一点 $v$ 作为 $e$ 的像。
+			\item 已知 $\varphi(x) = y$，找到 $\varphi(h_1 x)$ 对应的点。
+			\item 在步骤 4 的条件下，\!依次找到 $\varphi(h_2 x), \ldots, \varphi(h_d x)$ 对应的点。
+			\item<succ@1-> 重复步骤 4, 5，直到所有 $\varphi(x)$ 均被求出。
+		\end{enumerate}
+	}
+}
+
+\sol[t] {
+	\alt<2->{
+		\vspace{12pt}
+		{\color{fuchsia}\large 找到 $G_1$ 中的点和 $G_2$ 中的点的一一对应关系 $\psi$。}
+
+		\begin{figure}[htb]
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-2.3, -5.5) rectangle (8, 2.8);
+				\fill[nearly opaque, white] (-2.3, -5.5) rectangle (8, 2.8);
+			\only<3->{ %%%%%%%%
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, 0)}]
+					\coordinate (LF) at (-2.1, -0.7);
+					\coordinate (RF) at ( 5.8, -0.7);
+					\coordinate (LB) at (-2.1, 6);
+					\coordinate (RB) at ( 5.8, 6);
+				\end{scope}
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, -4)}]
+					\coordinate (lf) at (-2.1, -0.7);
+					\coordinate (rf) at ( 5.8, -0.7);
+					\coordinate (lb) at (-2.1, 6);
+					\coordinate (rb) at ( 5.8, 6);
+				\end{scope}
+				\draw (lf) -- (LF) (RF) -- +(0, -0.471288) edge[help lines, dashed] (rf) (lb) -- +(0, 0.471288) (rb) -- (RB);
+				% contents
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, 0)}]
+					\draw (LF) rectangle (RB);
+					\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style={transform shape, draw}]
+						\node (00) at (0.0, 0.0) {};
+						\node (01) at (2.5, -.15){};
+						\node (02) at (5.0, 0.2) {};
+						\node (03) at (0.2, 2.1) {};
+						\node (04) at (2.7, 1.95){};
+						\node (05) at (5.2, 2.3) {};
+						\node (06) at (-.2, 4.2) {};
+						\node (07) at (2.3, 4.05){};
+						\node (08) at (4.8, 4.4) {};
+						\begin{scope}[shift={(-1.3, 1)}]
+							\node (10) at (0.0, 0.0) {};
+							\node (11) at (5.0, 0.2) {};
+							\node (12) at (2.5, -.15){\alt<4->{\scriptsize $g$}{}};
+							\node (13) at (-.2, 4.2) {};
+							\node (14) at (4.8, 4.4) {};
+							\node (15) at (2.3, 4.05){};
+							\node (16) at (0.2, 2.1) {};
+							\node (17) at (5.2, 2.3) {};
+							\node (18) at (2.7, 1.95){};
+						\end{scope}
+					\end{scope}
+					\alt<4->{\path[densely dotted, fuchsia]}{\path[semithick, fuchsia]}
+						(00) edge (01) (01) edge (02) (02) edge[bend right=10] (00) (03) edge (04) (04) edge (05) (05) edge[bend right=10] (03) (06) edge (07) (07) edge (08) (08) edge[bend right=10] (06)
+						(10) edge[bend left=10] (11) (11) edge (12) (12) edge (10) (13) edge[bend left=10] (14) (14) edge (15) (15) edge (13) (16) edge[bend left=10] (17) (17) edge (18) (18) edge (16);
+				\end{scope}
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, -4)}]
+					\draw (lf) rectangle (rb);
+					\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style={transform shape, draw}]
+						\node (20) at (0.0, 0.0) {};
+						\alt<4->{\node[red]}{\node} (21) at (2.5, -.15){};
+						\node (22) at (5.0, 0.2) {};
+						\node (23) at (0.2, 2.1) {};
+						\node (24) at (2.7, 1.95){};
+						\node (25) at (5.2, 2.3) {};
+						\node (26) at (-.2, 4.2) {};
+						\node (27) at (2.3, 4.05){};
+						\node (28) at (4.8, 4.4) {};
+						\begin{scope}[shift={(-1.3, 1)}]
+							\alt<4->{\node[red]}{\node} (30) at (0.0, 0.0) {};
+							\node (31) at (5.0, 0.2) {};
+							\alt<4->{\node[red]}{\node} (32) at (2.5, -.15){};
+							\node (33) at (-.2, 4.2) {};
+							\node (34) at (4.8, 4.4) {};
+							\alt<4->{\node[red]}{\node} (35) at (2.3, 4.05){};
+							\node (36) at (0.2, 2.1) {};
+							\node (37) at (5.2, 2.3) {};
+							\node (38) at (2.7, 1.95){};
+						\end{scope}
+					\end{scope}
+					\begin{scope}[semithick]
+						\alt<4->{\path[thin, densely dotted, aqua!75!black]}{\path[aqua]}
+							(20) edge (25) (21) edge[bend right=20] (23) (22) edge[bend left] (24) (23) edge (28) (24) edge[bend left] (26) (25) edge[bend left=20] (27) (26) edge[bend left=20] (22) (27) edge (20) (28) edge (21);
+						\alt<4->{\path[thin, densely dotted, aqua!75!black]}{\path[thin, densely dashed, aqua!75!black]}
+							(31) edge[bend left=20] (33) (32) edge (34) (33) edge[bend left] (38) (34) edge (36) (35) edge[bend left=20] (37) (36) edge[bend right=20] (32) (37) edge (30) (38) edge[bend left] (31);
+						\only<-3>{\path[thin, densely dashed, aqua!75!black] (30) edge (35);}
+						\only<4>{\path[thin, densely dotted, aqua!75!black] (30) edge (35);}
+						\only<5->{\path[aqua] (30) edge (35);}
+
+						\alt<4->{\path[thin, densely dotted, yellow!90!black]}{\path[yellow!90!black]}
+							(20) edge[bend left=10] (33) (22) edge[bend left=10] (34) (23) edge (30) (24) edge (32) (25) edge (31) (26) edge (36) (27) edge (38) (28) edge (37);
+						\alt<4>{\path[thin, densely dotted, yellow!90!black]}{\path[yellow!90!black]}
+							(21) edge[bend left=10] (35);
+					\end{scope}
+				\end{scope}
+				\begin{scope}[semithick, orange]
+					\alt<4->{
+						\path (12) edge (32);
+						\path[thin, densely dotted]
+							(00) edge (20) (01) edge (21) (02) edge (22) (03) edge (23) (04) edge (24) (05) edge (25) (06) edge (26) (07) edge (27) (08) edge (28)
+							(10) edge (30) (11) edge (31) (13) edge (33) (14) edge (34) (15) edge (35) (16) edge (36) (17) edge (37) (18) edge (38);
+					}{
+						\path
+							(00) edge (20) (01) edge (21) (02) edge (22) (03) edge (23) (04) edge (24) (05) edge (25) (08) edge (28)
+							(10) edge (30) (11) edge (31) (12) edge (32) (14) edge (34) (16) edge (36) (17) edge (37) (18) edge (38);
+						\path[thin, densely dotted] (06) edge (26) (07) edge (27) (13) edge (33) (15) edge (35);
+					}
+				\end{scope}
+				\alt<4->{
+					\begin{scope}[densely dotted, green!50!black, every path/.style={path fading=fadingF13}]
+				}{
+					\begin{scope}[green!50!black, every path/.style={path fading=fadingF13}]
+				}
+					\draw (00) to (21);
+					\draw (01) to (22);
+					\draw (02) to[bend right=10] (20);
+					\draw (03) to (24);
+					\draw (04) to (25);
+					\draw (05) to[bend right=10] (23);
+					\draw (06) to (27);
+					\draw (07) to (28);
+					\draw (08) to[bend right=10] (26);
+				\end{scope}
+				\begin{scope}[densely dotted, green!50!black, every path/.style={path fading=fadingF24}]
+					\draw (10) to (31);
+					\draw (11) to (32);
+					\alt<4->{\draw[solid, semithick, fuchsia, path fading=none] (12) to (30);}{\draw (12) to (30);}
+					\draw (13) to (34);
+					\draw (14) to (35);
+					\draw (15) to (33);
+					\draw (16) to (37);
+					\draw (17) to (38);
+					\draw (18) to (36);
+				\end{scope}
+				\alt<4->{
+					\begin{scope}[densely dotted, blue, every path/.style={path fading=fadingF13}]
+				}{
+					\begin{scope}[blue, every path/.style={path fading=fadingF13}]
+				}
+					\draw (00) to[bend left=10] (23);
+					\draw (01) to[bend left=10] (24);
+					\draw (02) to[bend left=10] (25);
+					\draw (03) to[bend left=10] (26);
+					\draw (04) to[bend left=10] (27);
+					\draw (05) to[bend left=10] (28);
+					\draw (06) to[bend right=20] (20);
+					\draw (07) to[bend right=20] (21);
+					\draw (08) to[bend right=20] (22);
+				\end{scope}
+				\begin{scope}[densely dotted, blue, every path/.style={path fading=fadingF24}]
+					\draw (10) to[bend left=10] (33);
+					\draw (11) to[bend left=10] (34);
+					\alt<4->{\draw[solid, semithick, bend left=10, path fading=none] (12) to (35);}{\draw (12) to[bend left=10] (35);}
+					\draw (13) to[bend right=10] (36);
+					\draw (14) to[bend right=10] (37);
+					\draw (15) to[bend right=10] (38);
+					\draw (16) to[bend right=10] (30);
+					\draw (17) to[bend right=10] (31);
+					\draw (18) to[bend right=10] (32);
+				\end{scope}
+				\alt<4->{
+					\path[red, densely dotted]
+						(00) edge (30) (02) edge (31) (03) edge (36) (05) edge (37) (06) edge (33) (08) edge (34)
+						(10) edge (20) (11) edge (22) (13) edge (26) (14) edge (28) (16) edge (23) (17) edge (25)
+						(01) edge (32) (04) edge (38) (07) edge (35) (12) edge[semithick, solid] (21) (15) edge (27) (18) edge (24);
+				}{
+					\path[red]
+						(00) edge (30) (02) edge (31) (03) edge (36) (05) edge (37) (06) edge[densely dotted] (33) (08) edge (34)
+						(10) edge (20) (11) edge (22) (13) edge[densely dotted] (26) (14) edge (28) (16) edge (23) (17) edge (25)
+						(01) edge (32) (04) edge (38) (07) edge[densely dotted] (35) (12) edge (21) (15) edge[densely dotted] (27) (18) edge (24);
+				}
+			} %%%%%%%%
+			\end{tikzpicture}
+		\end{figure}
+	}{
+		\vspace{34pt}
+		\begin{enumerate}
+			\item<succ@1-> 区分 $G_1$ 和 $G_2$。
+			\item<alert@1-> 找到 $G_1$ 中的点和 $G_2$ 中的点的一一对应关系 $\psi$。
+			\item 任取 $G_1$ 中一点 $v$ 作为 $e$ 的像。
+			\item 已知 $\varphi(x) = y$，找到 $\varphi(h_1 x)$ 对应的点。
+			\item 在步骤 4 的条件下，\!依次找到 $\varphi(h_2 x), \ldots, \varphi(h_d x)$ 对应的点。
+			\item<succ@1-> 重复步骤 4, 5，直到所有 $\varphi(x)$ 均被求出。
+		\end{enumerate}
+	}
+}
+
+\sol {\vspace{8pt}
+	令 $N = N(g) \cap G_2$ 为 $g$ 的邻域在 $G_2$ 中的部分。
+
+	\onslide<2->{设 $N$ 导出的子图 $G_2[N] = (V', E')$，则 $V' = \bigl\{ \psi(g), \psi(h_1 g), \break \psi(h_2 g), \ldots, \psi(h_d g) \bigr\}$。}
+
+	\begin{itemize}
+		\item<4-> 由构造知，$\psi(h_i g)$ 和 $\psi (h_{i+1} g)$ 在 $G_2$ 中有连边。
+		\item<5-> $\color{fuchsia}d \geq 2$。
+		\item<6-> {
+			\only<-7>{\color{fuchsia!70!black}$\psi(g)$ 和 $\psi(h_i g)$ 在 $G_2$ 中没有连边}%
+			\only<8->{\color{fuchsia!80!black}$h_{k+1} h_k^{-1} \neq h_i$}%
+		}。\only<10->{%
+			\raise4pt\rlap{\vbox to0pt{%
+				\hsize210pt%
+				\centerline{\color{fuchsia!90!black}$\Leftarrow$ 任意一个 $h_i$ 都无法被其余 $h_k$ 表示}%
+				\only<11->{%
+					\centerline{\color{fuchsia} $\Uparrow$}%
+					\centerline{\color{fuchsia} $H$ 是 $S$ 的\emm{\textsl{极小生成集}}}%
+				}%
+			}}%
+		}
+		\item<7-> {
+			\only<-8>{\color{fuchsia!70!black}对 $\abs {i - j} > 1$，$\psi(h_i g)$ 和 $\psi(h_j g)$ 在 $G_2$ 中也没有连边}%
+			\only<9->{\color{fuchsia!80!black}$h_{k+1} h_k^{-1} h_i \neq h_j$ ($\abs {i - j} > 1$)}%
+		}。
+	\end{itemize}
+
+	\leavevmode
+
+	\onslide<3->{因此，$G_2[N]$ 包含两个连通分量，其中一个只包含一个顶点 $\psi(g)$，另外一个是\emm{\textsl{非空}}链 $\psi(h_1 g) \leftrightarrow \psi(h_2 g) \leftrightarrow \cdots \leftrightarrow \psi(h_d g)$。}
+}
+
+\sol[t] {
+	\alt<3->{
+		\vspace{12pt}
+		{\color{fuchsia}\large 已知 $\varphi(x) = y$，找到 $\varphi(h_1 x)$ 对应的点。}
+
+		\begin{figure}[htb]
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-2.3, -5.5) rectangle (8, 2.8);
+				\fill[nearly opaque, white] (-2.3, -5.5) rectangle (8, 2.8);
+			\only<4->{ %%%%%%%%
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, 0)}]
+					\coordinate (LF) at (-2.1, -0.7);
+					\coordinate (RF) at ( 5.8, -0.7);
+					\coordinate (LB) at (-2.1, 6);
+					\coordinate (RB) at ( 5.8, 6);
+				\end{scope}
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, -4)}]
+					\coordinate (lf) at (-2.1, -0.7);
+					\coordinate (rf) at ( 5.8, -0.7);
+					\coordinate (lb) at (-2.1, 6);
+					\coordinate (rb) at ( 5.8, 6);
+				\end{scope}
+				\draw (lf) -- (LF) (RF) -- +(0, -0.471288) edge[help lines, dashed] (rf) (lb) -- +(0, 0.471288) (rb) -- (RB);
+				% contents
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, 0)}]
+					\draw (LF) rectangle (RB);
+					\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style={transform shape, draw}]
+						\node (00) at (0.0, 0.0) {};
+						\alt<5->{\node[red]}{\node} (01) at (2.5, -.15){};
+						\node (02) at (5.0, 0.2) {};
+						\node (03) at (0.2, 2.1) {};
+						\node (04) at (2.7, 1.95){};
+						\node (05) at (5.2, 2.3) {};
+						\node (06) at (-.2, 4.2) {};
+						\node (07) at (2.3, 4.05){};
+						\node (08) at (4.8, 4.4) {};
+						\begin{scope}[shift={(-1.3, 1)}]
+							\alt<5->{\node[red]}{\node} (10) at (0.0, 0.0) {\alt<6->{\scriptsize $x g$}{}};
+							\node (11) at (5.0, 0.2) {};
+							\alt<5->{\node[red]}{\node} (12) at (2.5, -.15){\scriptsize $g$};
+							\node (13) at (-.2, 4.2) {};
+							\node (14) at (4.8, 4.4) {};
+							\alt<5->{\node[red]}{\node} (15) at (2.3, 4.05){};
+							\node (16) at (0.2, 2.1) {};
+							\node (17) at (5.2, 2.3) {};
+							\node (18) at (2.7, 1.95){};
+						\end{scope}
+					\end{scope}
+					\alt<6->{
+						\path[semithick, fuchsia] (12) edge (10);
+						\path[densely dotted, fuchsia]
+							(00) edge (01) (01) edge (02) (02) edge[bend right=10] (00) (03) edge (04) (04) edge (05) (05) edge[bend right=10] (03) (06) edge (07) (07) edge (08) (08) edge[bend right=10] (06)
+							(10) edge[bend left=10] (11) (11) edge (12) (13) edge[bend left=10] (14) (14) edge (15) (15) edge (13) (16) edge[bend left=10] (17) (17) edge (18) (18) edge (16);
+					}{
+						\path[densely dotted, fuchsia]
+							(00) edge (01) (01) edge (02) (02) edge[bend right=10] (00) (03) edge (04) (04) edge (05) (05) edge[bend right=10] (03) (06) edge (07) (07) edge (08) (08) edge[bend right=10] (06)
+							(10) edge[bend left=10] (11) (11) edge (12) (12) edge (10) (13) edge[bend left=10] (14) (14) edge (15) (15) edge (13) (16) edge[bend left=10] (17) (17) edge (18) (18) edge (16);
+					}
+				\end{scope}
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, -4)}]
+					\draw (lf) rectangle (rb);
+					\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style={transform shape, draw}]
+						\node (20) at (0.0, 0.0) {};
+						\node[red] (21) at (2.5, -.15){};
+						\node (22) at (5.0, 0.2) {};
+						\node (23) at (0.2, 2.1) {};
+						\node (24) at (2.7, 1.95){};
+						\node (25) at (5.2, 2.3) {};
+						\node (26) at (-.2, 4.2) {};
+						\node (27) at (2.3, 4.05){};
+						\node (28) at (4.8, 4.4) {};
+						\begin{scope}[shift={(-1.3, 1)}]
+							\node[red] (30) at (0.0, 0.0) {\alt<6->{\scriptsize $\psi\mskip-1mu(\mskip-1mu x g\mskip-1mu)$}{}};
+							\node (31) at (5.0, 0.2) {};
+							\node[red] (32) at (2.5, -.15){\scriptsize $\psi(g)$};
+							\node (33) at (-.2, 4.2) {};
+							\node (34) at (4.8, 4.4) {};
+							\node[red] (35) at (2.3, 4.05){};
+							\node (36) at (0.2, 2.1) {};
+							\node (37) at (5.2, 2.3) {};
+							\node (38) at (2.7, 1.95){};
+						\end{scope}
+					\end{scope}
+					\begin{scope}[semithick]
+						\path[thin, densely dotted, aqua!75!black]
+							(20) edge (25) (21) edge[bend right=20] (23) (22) edge[bend left] (24) (23) edge (28) (24) edge[bend left] (26) (25) edge[bend left=20] (27) (26) edge[bend left=20] (22) (27) edge (20) (28) edge (21)
+							(31) edge[bend left=20] (33) (32) edge (34) (33) edge[bend left] (38) (34) edge (36) (35) edge[bend left=20] (37) (36) edge[bend right=20] (32) (37) edge (30) (38) edge[bend left] (31);
+						\path[aqua] (30) edge (35);
+
+						\path[thin, densely dotted, yellow!90!black]
+							(20) edge[bend left=10] (33) (22) edge[bend left=10] (34) (23) edge (30) (24) edge (32) (25) edge (31) (26) edge (36) (27) edge (38) (28) edge (37);
+						\path[yellow!90!black] (21) edge[bend left=10] (35);
+					\end{scope}
+				\end{scope}
+				\begin{scope}[semithick, orange]
+					\alt<5->{
+						\path (01) edge (21) (10) edge (30) (12) edge (32) (15) edge (35);
+						\path[thin, densely dotted]
+							(00) edge (20) (02) edge (22) (03) edge (23) (04) edge (24) (05) edge (25) (06) edge (26) (07) edge (27) (08) edge (28)
+							(11) edge (31) (13) edge (33) (14) edge (34) (16) edge (36) (17) edge (37) (18) edge (38);
+					}{
+						\path (12) edge (32);
+						\path[thin, densely dotted]
+							(00) edge (20) (01) edge (21) (02) edge (22) (03) edge (23) (04) edge (24) (05) edge (25) (06) edge (26) (07) edge (27) (08) edge (28)
+							(10) edge (30) (11) edge (31) (13) edge (33) (14) edge (34) (15) edge (35) (16) edge (36) (17) edge (37) (18) edge (38);
+					}
+				\end{scope}
+				\begin{scope}[densely dotted, green!50!black, every path/.style={path fading=fadingF13}]
+					\draw (00) to (21);
+					\draw (01) to (22);
+					\draw (02) to[bend right=10] (20);
+					\draw (03) to (24);
+					\draw (04) to (25);
+					\draw (05) to[bend right=10] (23);
+					\draw (06) to (27);
+					\draw (07) to (28);
+					\draw (08) to[bend right=10] (26);
+				\end{scope}
+				\begin{scope}[densely dotted, green!50!black, every path/.style={path fading=fadingF24}]
+					\draw (10) to (31);
+					\draw (11) to (32);
+					\draw[solid, semithick, fuchsia, path fading=none] (12) to (30);
+					\draw (13) to (34);
+					\draw (14) to (35);
+					\draw (15) to (33);
+					\draw (16) to (37);
+					\draw (17) to (38);
+					\draw (18) to (36);
+				\end{scope}
+				\begin{scope}[densely dotted, blue, every path/.style={path fading=fadingF13}]
+					\draw (00) to[bend left=10] (23);
+					\draw (01) to[bend left=10] (24);
+					\draw (02) to[bend left=10] (25);
+					\draw (03) to[bend left=10] (26);
+					\draw (04) to[bend left=10] (27);
+					\draw (05) to[bend left=10] (28);
+					\draw (06) to[bend right=20] (20);
+					\draw (07) to[bend right=20] (21);
+					\draw (08) to[bend right=20] (22);
+				\end{scope}
+				\begin{scope}[densely dotted, blue, every path/.style={path fading=fadingF24}]
+					\draw (10) to[bend left=10] (33);
+					\draw (11) to[bend left=10] (34);
+					\draw[solid, semithick, bend left=10, path fading=none] (12) to (35);
+					\draw (13) to[bend right=10] (36);
+					\draw (14) to[bend right=10] (37);
+					\draw (15) to[bend right=10] (38);
+					\draw (16) to[bend right=10] (30);
+					\draw (17) to[bend right=10] (31);
+					\draw (18) to[bend right=10] (32);
+				\end{scope}
+				\path[red, densely dotted]
+					(00) edge (30) (02) edge (31) (03) edge (36) (05) edge (37) (06) edge (33) (08) edge (34)
+					(10) edge (20) (11) edge (22) (13) edge (26) (14) edge (28) (16) edge (23) (17) edge (25)
+					(01) edge (32) (04) edge (38) (07) edge (35) (12) edge[semithick, solid] (21) (15) edge (27) (18) edge (24);
+			} %%%%%%%%
+			\end{tikzpicture}
+		\end{figure}
+	}{
+		\vspace{34pt}
+		\begin{enumerate}
+			\item<succ@1-> 区分 $G_1$ 和 $G_2$。
+			\item<succ@1-> 找到 $G_1$ 中的点和 $G_2$ 中的点的一一对应关系 $\psi$。
+			\item<alert@1|succ@2-> 任取 $G_1$ 中一点 $v$ 作为 $e$ 的像。
+			\item<alert@2-> 已知 $\varphi(x) = y$，找到 $\varphi(h_1 x)$ 对应的点。
+			\item 在步骤 4 的条件下，\!依次找到 $\varphi(h_2 x), \ldots, \varphi(h_d x)$ 对应的点。
+			\item<succ@1-> 重复步骤 4, 5，直到所有 $\varphi(x)$ 均被求出。
+		\end{enumerate}
+	}
+}
+
+\sol[t] {
+	\alt<2->{
+		\vspace{12pt}
+		{\noindent\color{fuchsia}\large 在步骤\:4\:的条件下，\!\!依次找到 $\varphi(h_2 x), \ldots, \varphi(h_d x)$ 对应的点。\!\!}
+
+		\begin{figure}[htb]
+			\centering
+			\begin{tikzpicture}[x=.75cm, y=.75cm]
+				\useasboundingbox (-2.3, -5.5) rectangle (8, 2.8);
+				\fill[nearly opaque, white] (-2.3, -5.5) rectangle (8, 2.8);
+			\only<3->{ %%%%%%%%
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, 0)}]
+					\coordinate (LF) at (-2.1, -0.7);
+					\coordinate (RF) at ( 5.8, -0.7);
+					\coordinate (LB) at (-2.1, 6);
+					\coordinate (RB) at ( 5.8, 6);
+				\end{scope}
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, -4)}]
+					\coordinate (lf) at (-2.1, -0.7);
+					\coordinate (rf) at ( 5.8, -0.7);
+					\coordinate (lb) at (-2.1, 6);
+					\coordinate (rb) at ( 5.8, 6);
+				\end{scope}
+				\draw (lf) -- (LF) (RF) -- +(0, -0.471288) edge[help lines, dashed] (rf) (lb) -- +(0, 0.471288) (rb) -- (RB);
+				% contents
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, 0)}]
+					\draw (LF) rectangle (RB);
+					\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style={transform shape, draw}]
+						\node (00) at (0.0, 0.0) {};
+						\node[red] (01) at (2.5, -.15){\alt<5->{\scriptsize $\omega g$}{}};
+						\node (02) at (5.0, 0.2) {};
+						\node (03) at (0.2, 2.1) {};
+						\node (04) at (2.7, 1.95){};
+						\node (05) at (5.2, 2.3) {};
+						\node (06) at (-.2, 4.2) {};
+						\node (07) at (2.3, 4.05){};
+						\node (08) at (4.8, 4.4) {};
+						\begin{scope}[shift={(-1.3, 1)}]
+							\node[red] (10) at (0.0, 0.0) {\scriptsize $x g$};
+							\node (11) at (5.0, 0.2) {};
+							\node[red] (12) at (2.5, -.15){\scriptsize $g$};
+							\node (13) at (-.2, 4.2) {};
+							\node (14) at (4.8, 4.4) {};
+							\node[red] (15) at (2.3, 4.05){\alt<4->{\scriptsize $y g$}{}};
+							\node (16) at (0.2, 2.1) {};
+							\node (17) at (5.2, 2.3) {};
+							\node (18) at (2.7, 1.95){};
+						\end{scope}
+					\end{scope}
+					\path[semithick, fuchsia] (12) edge (10);
+					\path[densely dotted, fuchsia]
+						(00) edge (01) (01) edge (02) (02) edge[bend right=10] (00) (03) edge (04) (04) edge (05) (05) edge[bend right=10] (03) (06) edge (07) (07) edge (08) (08) edge[bend right=10] (06)
+						(10) edge[bend left=10] (11) (11) edge (12) (13) edge[bend left=10] (14) (14) edge (15) (15) edge (13) (16) edge[bend left=10] (17) (17) edge (18) (18) edge (16);
+				\end{scope}
+				\begin{scope}[cm={0.860927, -0.230672, 0.508729, 0.390367, (0, -4)}]
+					\draw (lf) rectangle (rb);
+					\begin{scope}[circle, minimum size=20pt, inner sep=-3pt, every node/.style={transform shape, draw}]
+						\node (20) at (0.0, 0.0) {};
+						\node[red] (21) at (2.5, -.15){\alt<5->{\scriptsize $\psi\mskip-1mu(\mskip-1mu\omega g\mskip-1mu)$}{}};
+						\node (22) at (5.0, 0.2) {};
+						\node (23) at (0.2, 2.1) {};
+						\node (24) at (2.7, 1.95){};
+						\node (25) at (5.2, 2.3) {};
+						\node (26) at (-.2, 4.2) {};
+						\node (27) at (2.3, 4.05){};
+						\node (28) at (4.8, 4.4) {};
+						\begin{scope}[shift={(-1.3, 1)}]
+							\node[red] (30) at (0.0, 0.0) {\scriptsize $\psi\mskip-1mu(\mskip-1mu x g\mskip-1mu)$};
+							\node (31) at (5.0, 0.2) {};
+							\node[red] (32) at (2.5, -.15){\scriptsize $\psi(g)$};
+							\node (33) at (-.2, 4.2) {};
+							\node (34) at (4.8, 4.4) {};
+							\node[red] (35) at (2.3, 4.05){\alt<4->{\scriptsize $\psi\mskip-1mu(\mskip-1mu y g\mskip-1mu)$}{}};
+							\node (36) at (0.2, 2.1) {};
+							\node (37) at (5.2, 2.3) {};
+							\node (38) at (2.7, 1.95){};
+						\end{scope}
+					\end{scope}
+					\begin{scope}[semithick]
+						\path[thin, densely dotted, aqua!75!black]
+							(20) edge (25) (21) edge[bend right=20] (23) (22) edge[bend left] (24) (23) edge (28) (24) edge[bend left] (26) (25) edge[bend left=20] (27) (26) edge[bend left=20] (22) (27) edge (20) (28) edge (21)
+							(31) edge[bend left=20] (33) (32) edge (34) (33) edge[bend left] (38) (34) edge (36) (35) edge[bend left=20] (37) (36) edge[bend right=20] (32) (37) edge (30) (38) edge[bend left] (31);
+						\alt<4>{\path[thick, aqua!75!black]}{\path[aqua]} (30) edge (35);
+
+						\path[thin, densely dotted, yellow!90!black]
+							(20) edge[bend left=10] (33) (22) edge[bend left=10] (34) (23) edge (30) (24) edge (32) (25) edge (31) (26) edge (36) (27) edge (38) (28) edge (37);
+						\alt<5>{\path[thick, yellow!75!black]}{\path[yellow!90!black]} (21) edge[bend left=10] (35);
+					\end{scope}
+				\end{scope}
+				\begin{scope}[semithick, orange]
+					\path (01) edge (21) (10) edge (30) (12) edge (32) (15) edge (35);
+					\path[thin, densely dotted]
+						(00) edge (20) (02) edge (22) (03) edge (23) (04) edge (24) (05) edge (25) (06) edge (26) (07) edge (27) (08) edge (28)
+						(11) edge (31) (13) edge (33) (14) edge (34) (16) edge (36) (17) edge (37) (18) edge (38);
+				\end{scope}
+				\begin{scope}[densely dotted, green!50!black, every path/.style={path fading=fadingF13}]
+					\draw (00) to (21);
+					\draw (01) to (22);
+					\draw (02) to[bend right=10] (20);
+					\draw (03) to (24);
+					\draw (04) to (25);
+					\draw (05) to[bend right=10] (23);
+					\draw (06) to (27);
+					\draw (07) to (28);
+					\draw (08) to[bend right=10] (26);
+				\end{scope}
+				\begin{scope}[densely dotted, green!50!black, every path/.style={path fading=fadingF24}]
+					\draw (10) to (31);
+					\draw (11) to (32);
+					\draw[solid, semithick, fuchsia, path fading=none] (12) to (30);
+					\draw (13) to (34);
+					\draw (14) to (35);
+					\draw (15) to (33);
+					\draw (16) to (37);
+					\draw (17) to (38);
+					\draw (18) to (36);
+				\end{scope}
+				\begin{scope}[densely dotted, blue, every path/.style={path fading=fadingF13}]
+					\draw (00) to[bend left=10] (23);
+					\draw (01) to[bend left=10] (24);
+					\draw (02) to[bend left=10] (25);
+					\draw (03) to[bend left=10] (26);
+					\draw (04) to[bend left=10] (27);
+					\draw (05) to[bend left=10] (28);
+					\draw (06) to[bend right=20] (20);
+					\draw (07) to[bend right=20] (21);
+					\draw (08) to[bend right=20] (22);
+				\end{scope}
+				\begin{scope}[densely dotted, blue, every path/.style={path fading=fadingF24}]
+					\draw (10) to[bend left=10] (33);
+					\draw (11) to[bend left=10] (34);
+					\draw[solid, semithick, bend left=10, path fading=none] (12) to (35);
+					\draw (13) to[bend right=10] (36);
+					\draw (14) to[bend right=10] (37);
+					\draw (15) to[bend right=10] (38);
+					\draw (16) to[bend right=10] (30);
+					\draw (17) to[bend right=10] (31);
+					\draw (18) to[bend right=10] (32);
+				\end{scope}
+				\path[red, densely dotted]
+					(00) edge (30) (02) edge (31) (03) edge (36) (05) edge (37) (06) edge (33) (08) edge (34)
+					(10) edge (20) (11) edge (22) (13) edge (26) (14) edge (28) (16) edge (23) (17) edge (25)
+					(01) edge (32) (04) edge (38) (07) edge (35) (12) edge[semithick, solid] (21) (15) edge (27) (18) edge (24);
+			} %%%%%%%%
+			\end{tikzpicture}
+		\end{figure}
+	}{
+		\vspace{34pt}
+		\begin{enumerate}
+			\item<succ@1-> 区分 $G_1$ 和 $G_2$。
+			\item<succ@1-> 找到 $G_1$ 中的点和 $G_2$ 中的点的一一对应关系 $\psi$。
+			\item<succ@1-> 任取 $G_1$ 中一点 $v$ 作为 $e$ 的像。
+			\item<succ@1-> 已知 $\varphi(x) = y$，找到 $\varphi(h_1 x)$ 对应的点。
+			\item<alert@1-> 在步骤 4 的条件下，\!依次找到 $\varphi(h_2 x), \ldots, \varphi(h_d x)$ 对应的点。
+			\item<succ@1-> 重复步骤 4, 5，直到所有 $\varphi(x)$ 均被求出。
+		\end{enumerate}
+	}
+}
+
+\sol {\vspace{12pt}
+	\begin{enumerate}
+		\divide\itemsep4%
+		\item<succ@1-> 区分 $G_1$ 和 $G_2$。
+		\item<succ@1-> 找到 $G_1$ 中的点和 $G_2$ 中的点的一一对应关系 $\psi$。
+		\item<succ@1-> 任取 $G_1$ 中一点 $v$ 作为 $e$ 的像。
+		\item<succ@1-> 已知 $\varphi(x) = y$，找到 $\varphi(h_1 x)$ 对应的点。
+		\item<succ@1-> 在步骤 4 的条件下，\!依次找到 $\varphi(h_2 x), \ldots, \varphi(h_d x)$ 对应的点。
+		\item<succ@1-> 重复步骤 4, 5，直到所有 $\varphi(x)$ 均被求出。
+	\end{enumerate}\pause
+
+	回顾刚才过程中我们对 $H$ 的要求：\pause
+	\begin{itemize}
+		\divide\itemsep4%
+		\item $d \geq 2$。\pause
+		\item \compress{-24pt}{$H$ 是 $S$ 的\emm{\textsl{极小生成集}}，\!即 $\<H\> \mathbin= S$，\!但对 $\forall H' \mathbin\subset H$，\!$\<H'\> \mathbin< S$。}
+	\end{itemize}\pause
+
+	由于 $S$ \textsl{不是循环群}，因此 $S$ 不存在大小为 $1$ 的生成集。因此只需任取一个生成集贪心删元素即可得到满足条件的 $H$。
+}
+
+\sol {\vspace{12pt}
+	番外\ 之\ 本题的交互过程。\pause
+
+	首先，通过要求选手给出 $S$ 的置换表示，容易判断传入的图 $G$ 是否满足 $S \leq \operatorname{Aut} G$。\pause
+
+	若 $S < \operatorname{Aut} G$，由 Lagrange 定理知 $\abs {\operatorname{Aut} G} \geq 2 \abs S$。\pause
+
+	重复进行如下过程：
+	\begin{itemize}
+		\divide\itemsep4%
+		\item 交互库随机一个置换 $g_1$。\pause
+		\item 令 $H = (V, E')$，其中 $E' = \left\{ \bigl( g_1(u), g_1(v) \bigr) \mid (u, v) \in E \right\}$。\pause
+		\item 让选手寻找置换 $g_2$ 满足 $(u, v) \in E \Longleftrightarrow \bigl( g_2(u), g_2(v) \bigr) \in E'$。\pause
+		\item 则此时必有 $g_1^{-1} g_2 \mathbin\in \operatorname{Aut} G$。若 $S \mathbin< \operatorname{Aut} G$，则 $g_1^{-1} g_2 \mathbin\in S$ 的\break 概率不超过 $\frac 12$。
+	\end{itemize}\pause
+
+	于是重复充分多次即可完成``证明''。
+}

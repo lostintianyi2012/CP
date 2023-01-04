@@ -1,0 +1,92 @@
+\documentclass[compress,notheorems]{beamer}
+\usepackage{xeCJKfntef, multicol, main}
+
+\newif\ifpreview
+
+\previewfalse % <-- change here !
+
+\ifpreview
+\newcommand<>\onlyx{}
+\newcommand<>\onslidex{}
+\let\pausex\relax
+\newcommand\sol[2][]{}
+\else
+\let\onlyx\only
+\let\onslidex\onslide
+\let\sol\frame
+\fi
+
+\usetikzlibrary{fadings}
+\tikzfading[name=fadingF13, top color=transparent!20, bottom color=transparent!60]
+\tikzfading[name=fadingF24, top color=transparent!40, bottom color=transparent!80]
+
+\hypersetup{bookmarksdepth=3}
+% \setbeamertemplate{background}{\includegraphics[width=12.8cm,trim=0 0 0 -72]{assets/ccf}}
+
+\setbeamertemplate{title page}{%
+\vbox{}\vfill\begingroup\centering
+\pgfsetfillopacity{.75}\begin{beamercolorbox}[sep=8pt,center]{title}\pgfsetfillopacity1%
+\usebeamerfont{title}\inserttitle\par\vskip.25em{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}\end{beamercolorbox}\vskip1em\par
+\begin{beamercolorbox}[sep=8pt,center]{author}\usebeamerfont{author}\insertauthor\end{beamercolorbox}%
+\begin{beamercolorbox}[sep=8pt,center]{institute}\usebeamerfont{institute}\insertinstitute\end{beamercolorbox}%
+\begin{beamercolorbox}[sep=8pt,center]{date}\usebeamerfont{date}\insertdate\end{beamercolorbox}%
+\vskip.5em{\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}\endgroup\vfill}
+
+\defbeamertemplate*{block begin}{transparent}{%
+\par\vskip\medskipamount
+\pgfsetfillopacity{.75}\begin{beamercolorbox}[colsep*=.75ex]{block title}\pgfsetfillopacity1%
+\usebeamerfont*{block title}\insertblocktitle\end{beamercolorbox}{\parskip0pt\par}%
+\ifbeamercolorempty[bg]{block title}{}{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
+\usebeamerfont{block body}%
+\pgfsetfillopacity{.75}\begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}\pgfsetfillopacity1%
+\ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+}
+
+\newenvironment<>{succenv}{\begin{altenv}#1%
+{\usebeamercolor[fg]{success text}\usebeamerfont{success text}\usebeamertemplate{success text begin}}
+{\usebeamertemplate{success text end}}{\color{.}}{}\ignorespaces}{\ifhmode\unskip\fi\end{altenv}}
+
+\setbeamercolor{success text}{fg=green!80!black}
+\setbeamertemplate{success text begin}{\setbeamercolor{local structure}{parent=success text}}
+
+\newcommand\emm{\CJKunderdot[format=\color{red}]}
+
+\newtheorem{theoe}{Theorem}[section]
+\newtheorem{defie}{Definition}[section]
+
+\begin{document}
+	\ifpreview\else\let\pausex\pause\fi
+	\title{构造题选讲}
+	\author{虞皓翔}
+	\institute{IIIS, Tsinghua University}
+	\setdate{2022}{1}{25}
+
+	\frame {%
+		\titlepage
+	}
+
+	\frame {%
+		\linewidth321pt%
+		\begin{multicols}{2}%
+			\tableofcontents[subsubsectionstyle=hide]%
+		\end{multicols}%
+	}
+
+	\section{网格类} % 1 ~ 3
+	\input{1-grid}
+
+	\section{序列类} % 4 ~ 7
+	\input{2-sequence}
+
+	\section{图论类} % 8 ~ 13
+	\input{3-graph}
+
+	\section{杂题} % 14 ~ 15
+	\input{4-miscellaneous}
+
+	\setcounter{section}{-1}
+
+	\sol {
+		\centerline{感谢大家的聆听，祝大家在冬令营取得优异的成绩！}
+	}
+\end{document}
