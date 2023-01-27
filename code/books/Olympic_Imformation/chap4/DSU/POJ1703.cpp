@@ -47,14 +47,24 @@ int main(){
 		scanf("%d%d", &n, &m);
 		init();
 		for(int i = 1; i <= m; i++){
-			char op[2], x, y;
-			scanf("%s%d%d", op, &x, &y);
-			if(op[0] == 'D'){
+			char op;
+			int x, y;
+			getchar();
+			scanf("%c%d%d", &op, &x, &y);
+			if(op == 'D'){
 				merge(x, y);
 			}
+
 			else{
 				int fx = find(x), fy = find(y);
-
+				if(fx != fy)
+					puts("Not sure yet.");
+				else{
+					if(d[x] + d[fx] - d[y] != 0)
+						puts("In different gangs.");
+					else
+						puts("In the same gang.");
+				}
 			}
 		}
 	}
