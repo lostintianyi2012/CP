@@ -22,8 +22,6 @@ int main(){
         lg[i] = lg[i >> 1] + 1;
     }
 
-    int maxk = lg[m];
-
     long long last = 0;
     for(int i = 1; i <= m; i ++){
         char op;
