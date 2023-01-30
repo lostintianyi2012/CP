@@ -7,8 +7,25 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-const int N = 1e6 + 10;
+const int N = 1e6 + 10 + 1e5 + 10;
 int idx = 0;
+
+mt19937 rnd(time(0));
+
+inline int read(){
+    int w = 1, s = 0;
+    char c = getchar();
+    while(!isdigit(c)){
+        if(c == '-')
+            w = -1;
+        c = getchar();
+    }
+    while(isdigit(c)){
+        s = (s << 3) + (s << 1) + (c ^ 48);
+        c = getchar();
+    }
+    return w * s;
+}
 
 struct node{
     int ls, rs;
@@ -21,7 +38,7 @@ void Create(int x){
     tr[idx].size = 1;
     tr[idx].ls = tr[idx].rs = 0;
     tr[idx].key = x;
-    tr[idx].pri = rand();
+    tr[idx].pri = rnd();
 }
 
 void upd(int u){
@@ -113,23 +130,47 @@ int Successor(int u, int k){
 int main(){
     srand(time(NULL));
     int root = 0;
-    int n;
-    scanf("%d", &n);
+    int m, n;
+    m = read(), n = read();
+    int last = 0, ans = 0;
+    for(int i = 1; i <= m; i++){
+        int t;
+        t = read();
+        Insert(root, t);
+    }
+
     while(n--){
         int opt, x;
-        scanf("%d%d", &opt, &x);
+        opt = read(), x = read();
+
+        x ^= last;
+
         if(opt == 1)
             Insert(root, x);
         else if(opt == 2)
             del(root, x);
-        else if(opt == 3)
-            printf("%d\n", rnk(root, x) + 1);
-        else if(opt == 4)
-            printf("%d\n", kth(root, x));
-        else if(opt == 5)
-            printf("%d\n", Precursor(root, x));
-        else
-            printf("%d\n", Successor(root, x));
+        else if(opt == 3){
+            int t = rnk(root, x) + 1;
+            last = t;
+            ans ^= t;
+        }
+        else if(opt == 4){
+            int t = kth(root, x);
+            last = t;
+            ans ^= t;
+        }
+        else if(opt == 5){
+            int t = Precursor(root, x);
+            last = t;
+            ans ^= t;
+        }
+        else{
+            int t = Successor(root, x);
+            last = t;
+            ans ^= t;
+        }
     }
+
+    printf("%d\n", ans);
     return 0;
 }

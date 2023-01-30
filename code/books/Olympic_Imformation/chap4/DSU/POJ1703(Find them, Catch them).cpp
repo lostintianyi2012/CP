@@ -1,7 +1,7 @@
 /* 
  * Author:lsty
  * Date:2023.1.26
- * Problem:POJ 1611 The Suspects
+ * Problem:POJ 1611 Find them, Catch them
  * Tag:DSU
  */
 #include <iostream>
