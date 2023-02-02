@@ -9,4 +9,11 @@
 #include <cstring>
 #include <algorithm>
 #include <time.h>
+#include <rand>
 
+using namespace std;
+const int N = 
+int main(){
+
+    return 0;
+}
