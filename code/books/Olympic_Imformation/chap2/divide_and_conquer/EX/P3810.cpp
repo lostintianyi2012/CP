@@ -72,10 +72,12 @@ void cdq(int l, int r){
     //算前一半对后一半的贡献
     int i = l, j = mid + 1;
     while(j <= r){
+        //正常查逆序对
         while(i <= mid && s2[i].y <= s2[j].y){
             add(s2[i].z, s2[i].cnt);
             i++;
         }
+        //查有多少个小于等于s2[j].z的z
         s2[j].ans += query(s2[j].z);
         j++;
     }
@@ -106,6 +108,7 @@ int main(){
     }
     cdq(1, idx);
     for(int i = 1; i <= idx; i++){
+        // -1 : 减去自己贡献的逆序对
         ans[s2[i].ans + s2[i].cnt - 1] += s2[i].cnt;
     }
     for(int i = 0; i < n; i++){
