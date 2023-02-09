@@ -11,7 +11,7 @@ struct H{
 } heap[N];
 
 int root, h[N], e[M], ne[M], w[M], dis[N], idx;
-bool add_to_heap[N], st[N]; // add_to_heap记录每个点是否被加入堆，f记录是否被删除
+bool add_to_heap[N], st[N]; //已经被加入堆中 / 已经从堆中被弹出
 int n, m, start;
 
 void add(int u, int v, int c){
@@ -31,20 +31,20 @@ int meld(int x, int y)
     return x;
 }
 
-int merge(int x)
-{
+int merge(int x){
 	heap[x].fa = 0;
     if (!x || !heap[x].sibling)
         return x;
-    int a = heap[x].sibling, add_to_heap = heap[a].sibling;
+    int a = heap[x].sibling, b = heap[a].sibling;
 	//清空已经合并的
 	heap[x].sibling = heap[a].sibling = heap[a].fa = 0;
-    return meld(meld(x, a), merge(add_to_heap));
+    return meld(meld(x, a), merge(b));
 }
 
 void decrease_key(int x, int v)
 { // 插入/修改
-    if (dis[x] = v, !add_to_heap[x]){
+    dis[x] = v;
+    if (!add_to_heap[x]){
         add_to_heap[x] = 1;
 		root = meld(root, x);
 		return ;
@@ -67,6 +67,14 @@ void dijkstra(){
 	while(!st[root]){
 		int u = root;
 		st[root] = true;
+        root = merge(heap[root].child);
+        for(int i = h[u]; i; i = ne[i]){
+            int v = e[i];
+            if(dis[v] > dis[u] + w[i]){
+                dis[v] = dis[u] + w[i];
+                decrease_key(v, dis[v]);
+            }
+        }
 	}
 }
 
@@ -77,6 +85,8 @@ int main(){
         scanf("%d%d%d", &u, &v, &c);
 		add(u, v, c);
 	}
+
+    dijkstra();
 
     for (int i = 1; i <= n; ++i)
         printf("%d ", dis[i]);
