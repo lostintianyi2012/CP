@@ -1,94 +1,91 @@
 #include <iostream>
-#include <cstdio>
 #include <algorithm>
 #include <string.h>
+#include <stdio.h>
 
-const int N = 1e5 + 3, M = 2e5 + 3;
+using namespace std;
 
-struct H{
-    int child, fa, sibling;
-	int val;
-} heap[N];
+template<typename T>
+class ParingHeap{
+    struct Node{
+        T val;
+        Node *sibling, *child;
 
-int root, h[N], e[M], ne[M], w[M], dis[N], idx;
-bool add_to_heap[N], st[N]; //已经被加入堆中 / 已经从堆中被弹出
-int n, m, start;
-
-void add(int u, int v, int c){
-	e[++idx] = v, ne[idx] = h[u], w[idx] = c, h[u] = idx;
-}
-
-int meld(int x, int y)
-{
-    if (!x || !y)
-        return x | y;
-    if (dis[x] > dis[y])
-        std::swap(x, y);
-    heap[y].fa = x;
-    heap[y].sibling = heap[x].child;
-    heap[heap[y].sibling].fa = y;
-    heap[x].child = y;
-    return x;
-}
-
-int merge(int x){
-	heap[x].fa = 0;
-    if (!x || !heap[x].sibling)
-        return x;
-    int a = heap[x].sibling, b = heap[a].sibling;
-	//清空已经合并的
-	heap[x].sibling = heap[a].sibling = heap[a].fa = 0;
-    return meld(meld(x, a), merge(b));
-}
-
-void decrease_key(int x, int v)
-{ // 插入/修改
-    dis[x] = v;
-    if (!add_to_heap[x]){
-        add_to_heap[x] = 1;
-		root = meld(root, x);
-		return ;
-	}
-    if (!heap[x].fa)
-        return;
-    if (heap[heap[x].fa].child == x)
-        heap[heap[x].fa].child = heap[x].sibling;
-    else
-        heap[heap[x].fa].sibling = heap[x].sibling;
-
-    heap[heap[x].sibling].fa = heap[x].fa;
-	heap[x].fa = heap[x].sibling = 0;
-	root = meld(root, x);
-}
-
-void dijkstra(){
-	memset(dis, 0x3f, sizeof dis);
-	decrease_key(start, 0);
-	while(!st[root]){
-		int u = root;
-		st[root] = true;
-        root = merge(heap[root].child);
-        for(int i = h[u]; i; i = ne[i]){
-            int v = e[i];
-            if(dis[v] > dis[u] + w[i]){
-                dis[v] = dis[u] + w[i];
-                decrease_key(v, dis[v]);
-            }
+        Node(){}
+        Node(T _val, Node *_sibling, Node *_child){
+            val = _val, sibling = _sibling, child = _child;
         }
-	}
-}
+    };
+
+    public:
+    Node* root = nullptr;
+    Node* meld(Node* x, Node* y){
+        if(x == nullptr)
+            return y;
+        if(y == nullptr)
+            return x;
+        if(x->val > y->val)
+            swap(x, y);
+        y->sibling = x->child;
+        x->child = y;
+        return x;
+    }
+
+    void push(T x){
+        Node* y = new Node;
+        y->val = x;
+        y->sibling = y->child = nullptr;
+        root = meld(root, y);
+    }
+
+    void heap_merge(ParingHeap& b){
+        root = meld(root, b.root);
+    }
+
+    Node* merge(Node* x){
+        if(x == nullptr || x->sibling == nullptr)
+            return x;
+        Node* y = x->sibling;
+        Node* nxt = y->sibling;
+        x->sibling = y->sibling = nullptr;
+        return meld(meld(x,y), merge(nxt));
+    }
+
+    void pop(){
+        Node* x = root;
+        if(x == nullptr)
+            return ;
+        root = merge(root->child);
+        delete(x);
+    }
+
+    T top(){
+        return root->val;
+    }
+
+    bool empty(){
+        return root == nullptr;
+    }
+};
 
 int main(){
-    scanf("%d%d%d", &n, &m, &start);
-    for (int i = 1; i <= m; i++){
-		int u, v, c;
-        scanf("%d%d%d", &u, &v, &c);
-		add(u, v, c);
-	}
-
-    dijkstra();
-
-    for (int i = 1; i <= n; ++i)
-        printf("%d ", dis[i]);
+    int n;
+    ParingHeap<int> h;
+    scanf("%d", &n);
+    for(int i = 1; i <= n; i++){
+        int op;
+        scanf("%d", &op);
+        if(op == 1){
+            int x;
+            scanf("%d", &x);
+            h.push(x);
+        }
+        else if(op == 2){
+            printf("%d\n", h.top());
+        }
+        else if(op == 3){
+            h.pop();
+        }
+    }
     return 0;
 }
