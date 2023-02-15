@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.14)  12 FEB 2023 17:24
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.6)  15 FEB 2023 19:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -203,8 +203,7 @@ Package fontspec Info: Font family 'SimSun(0)' created for font 'SimSun' with
 
 )) (c:/texlive/2022/texmf-dist/tex/latex/ctex/config/ctex.cfg
 File: ctex.cfg 2021/12/12 v2.5.8 Configuration file (CTEX)
-)
-No file test.aux.
+) (./test.aux)
 \openout1 = `test.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
@@ -286,12 +285,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 8.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 8.
-[1
+ [1
 
 ] (./test.aux) ) 
 Here is how much of TeX's memory you used:
- 6563 strings out of 476179
- 196078 string characters out of 5813072
+ 6565 strings out of 476179
+ 196096 string characters out of 5813073
  536730 words of memory out of 5000000
  27276 multiletter control sequences out of 15000+600000
  473789 words of font info for 58 fonts, out of 8000000 for 9000
