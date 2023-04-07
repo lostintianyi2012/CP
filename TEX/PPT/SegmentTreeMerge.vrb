@@ -1,0 +1,18 @@
+\frametitle{一个例子}
+\begin{lstlisting}[numbers=left, firstnumber=1]
+        int merge(int a, int b, int l, int r) {
+            if (!a) return b;
+            if (!b) return a;
+
+            //叶子结点
+            if (l == r) {
+                // do something
+                return a;
+            }
+            int mid = l + r >> 1;
+            ls(a) = merge(ls(a), ls(b), l, mid);
+            rs(a) = merge(rs(a), rs(b), mid + 1, r);
+            pushup(a);
+            return a;
+        }
+    \end{lstlisting}

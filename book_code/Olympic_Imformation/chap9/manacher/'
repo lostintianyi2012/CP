@@ -1,0 +1,38 @@
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <string.h>
+
+using namespace std;
+typedef long long ll;
+typedef pair<ll, ll> pll;
+const int N = 5e5 + 10;
+int n;
+pll point[N];
+int tr[N];
+
+int lowbit(int x){
+	return x & -x;
+}
+
+void add(int x, int k){
+	for(int i = k; i <= n; i += lowbit(i))
+}
+int main(){
+	int T;
+	scanf("%d", &T);
+	while(T--){
+		scanf("%d", &n);
+		for(int i = 1; i <= n; i++)
+			scanf("%lld%lld", &point[i].first, &point[i].second);
+		std::sort(point + 1, point + 1 + n);
+		if(point[n >> 1].first != point[(n >> 1) + 1].first){
+			printf("2\n");
+			continue;
+		}
+		for(int i = 1; i <= n; i++){
+			
+		}
+	}
+	return 0;
+}

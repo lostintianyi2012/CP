@@ -1,0 +1,26 @@
+{
+	"nodes":[
+		{"type":"file","file":"字符串/KMP/P3426 SZA-Template.md","id":"ab9e1affd2dfb47c","x":220,"y":1100,"width":620,"height":320},
+		{"type":"text","text":"一个字符串所有公共前后缀长度是\n$\\pi (n),\\pi (\\pi (n)), \\pi(\\pi (\\pi (n)))\\cdots$ \n由前缀函数定义易证","id":"352217a84c2e983f","x":400,"y":580,"width":353,"height":165},
+		{"type":"text","text":"所有长度大于 $\\lfloor \\frac{|s|}{2} \\rfloor$ 的 border 长度形成等差数列，且可以相互表示","id":"49b797e82b6b1b36","x":473,"y":240,"width":340,"height":140},
+		{"type":"file","file":"字符串/KMP/P3435 OKR-Periods of Words.md","id":"0f40651a497f7960","x":1020,"y":720,"width":720,"height":440},
+		{"type":"file","file":"字符串/KMP/KMP.md","id":"68b606b19f9b6de4","x":-620,"y":310,"width":520,"height":300},
+		{"type":"file","file":"字符串/自动机理论/AC自动机/Aho Corasick Automaton.md","id":"d13b273678cedff2","x":-1352,"y":-840,"width":920,"height":560},
+		{"type":"file","file":"字符串/hash/P3501 ANT-Antisymmetry.md","id":"6d38191cd1f1f875","x":-760,"y":1880,"width":600,"height":320},
+		{"type":"text","text":"字符串是一个线性序列，考虑对称性相关问题的通常的方法是考虑其对称轴","id":"3513cd0d6011a54a","x":280,"y":1966,"width":363,"height":147},
+		{"type":"file","file":"字符串/自动机理论/确定性有限状态自动机.md","id":"1d7799dff18d5fcd","x":-1440,"y":780,"width":680,"height":480},
+		{"type":"file","file":"字符串/Trie/Trie.md","id":"56a6fb2356756aa5","x":-3000,"y":-637,"width":880,"height":1097},
+		{"type":"file","file":"字符串/自动机理论/后缀自动机/Suffix Automaton.md","id":"b924e54278debe41","x":-2660,"y":1140,"width":580,"height":360}
+	],
+	"edges":[
+		{"id":"591287ea0a5ef4fa","fromNode":"68b606b19f9b6de4","fromSide":"right","toNode":"49b797e82b6b1b36","toSide":"left","label":"结论1"},
+		{"id":"be9c3b00920f89be","fromNode":"68b606b19f9b6de4","fromSide":"right","toNode":"352217a84c2e983f","toSide":"left","label":"结论2"},
+		{"id":"c605e28a5e5b216c","fromNode":"68b606b19f9b6de4","fromSide":"bottom","toNode":"ab9e1affd2dfb47c","toSide":"left","label":"例题1"},
+		{"id":"7444e82f725990f6","fromNode":"352217a84c2e983f","fromSide":"right","toNode":"0f40651a497f7960","toSide":"left"},
+		{"id":"98a73a5afba4e106","fromNode":"6d38191cd1f1f875","fromSide":"right","toNode":"3513cd0d6011a54a","toSide":"left"},
+		{"id":"bd3aff792a4ee15c","fromNode":"68b606b19f9b6de4","fromSide":"left","toNode":"d13b273678cedff2","toSide":"bottom"},
+		{"id":"3192e2c78c9225f1","fromNode":"56a6fb2356756aa5","fromSide":"right","toNode":"d13b273678cedff2","toSide":"bottom"},
+		{"id":"7243a79df808323f","fromNode":"56a6fb2356756aa5","fromSide":"right","toNode":"1d7799dff18d5fcd","toSide":"top","toEnd":"none","label":"字符串理论中最简单的自动机"},
+		{"id":"85012596daa6f4a7","fromNode":"1d7799dff18d5fcd","fromSide":"left","toNode":"b924e54278debe41","toSide":"right"}
+	]
+}

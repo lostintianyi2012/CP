@@ -1,0 +1,18 @@
+{
+	"nodes":[
+		{"type":"text","text":"由一个集合转移到后面的所有子集，或者由前面的所有子集转移到这个节点(实际上就是全集 $\\rightarrow$ 子集或者子集 $\\rightarrow$ 全集)","id":"0955651346e82cb3","x":-100,"y":-560,"width":540,"height":140},
+		{"type":"text","text":"P3773 吉夫特中，一个点的答案会对后面所有是其子集的点产生影响，使用了子集枚举的方法枚举出所有后面的点进行转移，原序列的下标被转移到时间维，利用刷表","id":"a574f876a1e5d05d","x":-640,"y":-710,"width":460,"height":220},
+		{"type":"text","text":"例子：\n该点的状态由前面所有的是该点约数的状态转移来，把每个数看成关于质因数的可重集，对于每个点转移到后面可以枚举该点的所有倍数","id":"1f7e8721d38a29fb","x":-380,"y":-306,"width":360,"height":260},
+		{"type":"text","text":"利用刷表容易维护","id":"e55b52fa17a22368","x":220,"y":-306,"width":280,"height":80},
+		{"type":"text","text":"考虑这样做的原因：\n对于每个点，如果对后面某些点有贡献，那么填表时对于后面的每个点都要找到前面这个点，这是困难的，不如通过这个点枚举所有可能转移到的点","id":"769a611c539bf25e","x":-960,"y":-352,"width":400,"height":252},
+		{"id":"5bf567369de10cc3","x":-1222,"y":-547,"width":262,"height":114,"type":"text","text":"思路来源：\n也许是质数筛子"}
+	],
+	"edges":[
+		{"id":"2f9fd5cd5881bc71","fromNode":"a574f876a1e5d05d","fromSide":"right","toNode":"0955651346e82cb3","toSide":"left"},
+		{"id":"49ce53535e17d9a6","fromNode":"0955651346e82cb3","fromSide":"bottom","toNode":"e55b52fa17a22368","toSide":"top"},
+		{"id":"7ee6f9da779e15eb","fromNode":"0955651346e82cb3","fromSide":"bottom","toNode":"1f7e8721d38a29fb","toSide":"top"},
+		{"id":"9975cbe1c7f2b748","fromNode":"e55b52fa17a22368","fromSide":"left","toNode":"1f7e8721d38a29fb","toSide":"right"},
+		{"id":"c586a97f7e2436b8","fromNode":"a574f876a1e5d05d","fromSide":"bottom","toNode":"769a611c539bf25e","toSide":"top"},
+		{"id":"4a06534974b534e0","fromNode":"769a611c539bf25e","fromSide":"left","toNode":"5bf567369de10cc3","toSide":"bottom"}
+	]
+}

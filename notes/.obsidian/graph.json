@@ -1,0 +1,58 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": true,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "tag:#Daily-note",
+      "color": {
+        "a": 1,
+        "rgb": 16333113
+      }
+    },
+    {
+      "query": "tag:#数论",
+      "color": {
+        "a": 1,
+        "rgb": 3971052
+      }
+    },
+    {
+      "query": "tag:#数据结构",
+      "color": {
+        "a": 1,
+        "rgb": 16771154
+      }
+    },
+    {
+      "query": "tag:#组合计数",
+      "color": {
+        "a": 1,
+        "rgb": 15357940
+      }
+    },
+    {
+      "query": "tag:#图论",
+      "color": {
+        "a": 1,
+        "rgb": 5431504
+      }
+    }
+  ],
+  "collapse-display": true,
+  "showArrow": false,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": true,
+  "centerStrength": 0.518713248970312,
+  "repelStrength": 10,
+  "linkStrength": 1,
+  "linkDistance": 250,
+  "scale": 0.8360386601669916,
+  "close": true
+}

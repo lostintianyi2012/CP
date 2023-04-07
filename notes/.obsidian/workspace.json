@@ -1,0 +1,192 @@
+{
+  "main": {
+    "id": "6413f2a443b59000",
+    "type": "split",
+    "children": [
+      {
+        "id": "6233f8b1f764e2ba",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "07825408f7d1e9dd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Daily/2023-04-07.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "f0c81f033d8cbd62",
+    "type": "split",
+    "children": [
+      {
+        "id": "ee9f4c97032cc8d8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f1743a77fa3fc501",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "45757baacc8e6e59",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "1b18109ab9180cf3",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "63ed9918fc25e5e8",
+    "type": "split",
+    "children": [
+      {
+        "id": "bc1b9ac63de5ef79",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "74e724b7450e7106",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Daily/2023-04-07.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "98adc4100ba6e60c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Daily/2023-04-07.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "15983f1ca470a168",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "0b0711ed0ecc53d2",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Daily/2023-04-07.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "markdown-importer:打开 Markdown 格式转换器": false
+    }
+  },
+  "active": "07825408f7d1e9dd",
+  "lastOpenFiles": [
+    "Daily/2023-04-06.md",
+    "Daily/2023-04-07.md",
+    "template/Daily-template.md",
+    "Daily/2023-04-03.md",
+    "ABC295 E.md",
+    "Daily/2023-03-28.md",
+    "未命名.md",
+    "未命名.canvas",
+    "根号分治.md",
+    "P3792.md",
+    "P7706 文文的摄影布置.md",
+    "Daily/2023-03-27.md",
+    "Daily/2023-03-24.md",
+    "Daily/2023-03-23.md",
+    "Daily/2023-03-15.md",
+    "Daily/2023-03-16.md",
+    "字符串/KMP/KMP.md",
+    "字符串.canvas",
+    "字符串/自动机理论/后缀自动机/Suffix Automaton.md",
+    "离散数学/9图的矩阵表示.pdf",
+    "离散数学/8.1树.pdf",
+    "离散数学/7.2哈密顿图.pdf",
+    "离散数学/7.1欧拉图.pdf",
+    "离散数学/6.4无向图的连通度.pdf",
+    "离散数学/6.3无向图的连通性.pdf",
+    "离散数学/6.2通路与回路.pdf",
+    "离散数学/6.1图的基本概念.pdf",
+    "离散数学/5.3序数.pdf",
+    "离散数学/5.2基数和基数的比较运算.pdf",
+    "散/期望/利用主元法求解一些期望问题.md",
+    "概率期望.canvas",
+    "字符串/自动机理论/确定性有限状态自动机.md",
+    "字符串/KMP/P3426 SZA-Template.md",
+    "字符串/KMP/P3435 OKR-Periods of Words.md",
+    "字符串/自动机理论/AC自动机/Aho Corasick Automaton.md",
+    "字符串/hash/P3501 ANT-Antisymmetry.md",
+    "字符串/Trie/Trie.md",
+    "未完成/Manacher.md",
+    "散/期望/P1654 OSU!.md"
+  ]
+}

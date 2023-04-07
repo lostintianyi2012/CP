@@ -1,0 +1,121 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+typedef long long ll;
+typedef pair<ll, ll> pll;
+const int N = 3e5 + 10;
+//这里曾经有一个双模哈希，但是我被卡空间了所以没了
+const ll mod1 = 998244353, mod2 = 1004535809;
+const ll inf = 0x3f3f3f3f;
+int squaresum[25000010];
+int a[N];
+int n, m;
+
+struct node{
+	int l, r;
+	int sum1;
+	int mina;
+}tr[N << 2];
+
+void pushup(int u){
+	tr[u].sum1 = ((ll)tr[u << 1].sum1 + tr[u << 1 | 1].sum1) % mod1;
+	tr[u].mina = min(tr[u << 1].mina, tr[u << 1 | 1].mina);
+}
+
+void build(int u, int l, int r){
+	tr[u].l = l, tr[u].r = r;
+	if(l == r){
+		tr[u].sum1 = (ll)a[l] * a[l] % mod1;
+		tr[u].mina = a[l];
+		return ;
+	}
+	int mid = l + r >> 1;
+	build(u << 1, l, mid);
+	build(u << 1 | 1, mid + 1, r);
+	pushup(u);
+}
+
+void modify(int u, int x, int k){
+	if(tr[u].l == x && tr[u].r == x){
+		tr[u].sum1 = (ll)k * k % mod1;
+		tr[u].mina = k;
+		return ;
+	}
+	int mid = tr[u].l + tr[u].r >> 1;
+	if(x <= mid)
+		modify(u << 1, x, k);
+	else
+		modify(u << 1 | 1, x, k);
+	pushup(u);
+}
+
+int query(int u, int l, int r){
+	if(l <= tr[u].l && tr[u].r <= r){
+		return tr[u].sum1;
+	}
+	int ans = 0;
+	int mid = tr[u].l + tr[u].r >> 1;
+	if(l <= mid){
+		ans = (ans + query(u << 1, l, r)) % mod1;
+	}
+	if(r > mid){
+		ans = (ans + query(u << 1 | 1, l, r)) % mod1;
+	}
+	return ans;
+}
+
+int querymin(int u, int l, int r){
+	if(l <= tr[u].l && tr[u].r <= r){
+		return tr[u].mina;
+	}
+	int ans = inf;
+	int mid = tr[u].l + tr[u].r >> 1;
+	if(l <= mid)
+		ans = min(ans, querymin(u << 1, l, r));
+	if(r > mid)
+		ans = min(ans, querymin(u << 1 | 1, l, r));
+	return ans;
+}
+
+int main(){
+	int n, m;
+	scanf("%d%d", &n, &m);
+	for(int i = 1; i <= n; i++){
+		scanf("%d", &a[i]);
+	}
+	build(1, 1, n);
+	
+	for(int i = 1; i < 25000010; i++){
+		squaresum[i] = ((ll)squaresum[i-1] + 1ll * i * i % mod1) % mod1;
+	}
+	for(int i = 1; i <= m; i++){
+		int op;
+		scanf("%d", &op);
+		if(op == 1){
+			int x;
+			int y;
+			scanf("%d%d", &x, &y);
+			modify(1, x, y);
+		}
+		else{
+			int l, r;
+			scanf("%d%d", &l, &r);
+			int res = query(1, l, r);
+			int st = querymin(1, l, r);
+			int len = r - l + 1;
+
+//			if(st + len - 1 >= 25000010){
+//				puts("yuanxing");
+//				continue;
+//			}
+			if(res == ((ll)squaresum[st + len - 1] - squaresum[st - 1] + mod1) % mod1)
+				puts("damushen");
+			else
+				puts("yuanxing");
+		}
+	}
+	return 0;
+}

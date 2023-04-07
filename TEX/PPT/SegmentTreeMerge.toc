@@ -1,0 +1,18 @@
+\beamer@sectionintoc {1}{前置知识}{6}{0}{1}
+\beamer@subsectionintoc {1}{1}{权值线段树}{6}{0}{1}
+\beamer@subsectionintoc {1}{2}{动态开点线段树}{7}{0}{1}
+\beamer@sectionintoc {2}{线段树合并}{8}{0}{2}
+\beamer@subsectionintoc {2}{1}{线段树合并的过程}{8}{0}{2}
+\beamer@subsectionintoc {2}{2}{板子题}{14}{0}{2}
+\beamer@subsubsectionintoc {2}{2}{1}{永无乡}{14}{0}{2}
+\beamer@subsubsectionintoc {2}{2}{2}{Lomsat gelral}{18}{0}{2}
+\beamer@subsectionintoc {2}{3}{略有难度的题目}{20}{0}{2}
+\beamer@subsubsectionintoc {2}{3}{1}{Dominant Indices}{20}{0}{2}
+\beamer@subsubsectionintoc {2}{3}{2}{天天爱跑步}{26}{0}{2}
+\beamer@subsectionintoc {2}{4}{棋局}{31}{0}{2}
+\beamer@sectionintoc {3}{线段树合并优化DP}{40}{0}{3}
+\beamer@subsectionintoc {3}{1}{介绍}{40}{0}{3}
+\beamer@subsectionintoc {3}{2}{例题}{41}{0}{3}
+\beamer@subsubsectionintoc {3}{2}{1}{Forbidden Value}{41}{0}{3}
+\beamer@subsubsectionintoc {3}{2}{2}{MinMax}{46}{0}{3}
+\beamer@sectionintoc {4}{习题}{55}{0}{4}

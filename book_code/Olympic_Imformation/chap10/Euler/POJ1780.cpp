@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string.h>
+#include <algorithm>
+#include <stdio.h>
+
+using namespace std;
+const int N = 1e5 + 10;
+int num[N];
+int stke[N * 10], tope;
+char stka[N * 10];
+int topa;
+int m;
+
+void dfs(int v){	//v是一个n-1位序列
+	int e;
+	while(num[v] < 10){ //这个点填的数字
+		e = 10 * v + num[v];
+		num[v]++;
+		stke[tope++] = e;
+		v = e % m;
+	}
+}
+
+int main(){
+	int n;
+	while(scanf("%d", &n) != EOF && n){
+		tope = topa = 0;
+		m = 1;
+		for(int i = 0; i < n-1; i++)	m *= 10;
+		memset(num, 0, sizeof(num));
+		dfs(0);
+
+		while(tope){
+			int e = stke[--tope];
+			stka[topa++] = e % 10 + '0';
+			dfs(e / 10);
+		}
+		for(int i = 1; i < n; i++)
+			printf("0");
+		while(topa)
+			printf("%c", stka[--topa]);
+		printf("\n");
+	}
+	return 0;
+}
