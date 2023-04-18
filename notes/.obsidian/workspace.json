@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Daily/2023-04-07.md",
+                "file": "Daily/2023-04-18.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Daily/2023-04-07.md",
+                "file": "Daily/2023-04-18.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Daily/2023-04-07.md",
+                "file": "Daily/2023-04-18.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Daily/2023-04-07.md"
+                "file": "Daily/2023-04-18.md"
               }
             }
           }
@@ -149,8 +149,10 @@
   },
   "active": "07825408f7d1e9dd",
   "lastOpenFiles": [
-    "Daily/2023-04-06.md",
+    "Daily/2023-04-17.md",
+    "Daily/2023-04-18.md",
     "Daily/2023-04-07.md",
+    "Daily/2023-04-06.md",
     "template/Daily-template.md",
     "Daily/2023-04-03.md",
     "ABC295 E.md",
@@ -185,8 +187,6 @@
     "字符串/KMP/P3435 OKR-Periods of Words.md",
     "字符串/自动机理论/AC自动机/Aho Corasick Automaton.md",
     "字符串/hash/P3501 ANT-Antisymmetry.md",
-    "字符串/Trie/Trie.md",
-    "未完成/Manacher.md",
-    "散/期望/P1654 OSU!.md"
+    "字符串/Trie/Trie.md"
   ]
 }
